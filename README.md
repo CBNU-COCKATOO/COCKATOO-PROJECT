@@ -24,8 +24,8 @@
 |팀원|심지연|2019038048|back-end / AI|
 |팀원|장세나|2019038086|back-end / AI|
 
-## How to contact us?
+## How to contact us??
 이메일을 통해 저희와 연락 할 수 있습니다.  
-You can contact us through email.  
+You can contact us through email.
 Our Email is **Cocatoo2022@gmail.com**  
 Our blog address is **https://cockatoo2022.tistory.com**
