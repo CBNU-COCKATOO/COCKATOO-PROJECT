@@ -1,16 +1,17 @@
-import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import styled from "styled-components"
+
+const Html = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height:70vh;
+`;
 function Main(){
     return(
-        <>
-        <h3>메인입니다.</h3>
-        <ul>
-            <Link to="/closet/nakhyeon"><li>낙현의 옷장</li></Link>
-            <Link to="/closet/jiyeon"><li>지연의 옷장</li></Link>
-            <Link to="/closet/sena"><li>세나의 옷장</li></Link>
-            <Link to="/ranking"><li>랭킹으로 이동</li></Link>
-        </ul>
-        </>
+        <Html>
+        <h1>추후 업데이트 예정입니다..</h1>
+        </Html>
     )
 }
 export default Main;
