@@ -7,12 +7,21 @@ const Container = styled.div`
     height: 81vh;
     
 `;
-const Menu = styled.div`
+const LEFT = styled.div`
     width:30%;
-    justify-content: center;
     text-align: center;
     margin: 3vw;
     margin-top:4vh;
+    margin-left: 15vw;
+    
+`;
+const Right = styled.div`
+    width:70%;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    margin-right: 2vw;
 `;
 const Nav = styled.div`
     width:100%; 
@@ -25,6 +34,9 @@ const NavMenu =styled.div`
     margin-left: 2.5vw;
     height:6vh;
     margin-top:0.1vh;
+    &:hover{
+        background-color:darkgray;
+    }
 `;
 const Profile = styled.div`
     width:80%;
@@ -51,11 +63,21 @@ const ProfileInfoFollower = styled.div`
 const ProfileHeight = styled.div`
     width:50%;
 `;
+
+const Detail = styled.div`
+    width:80%;
+    border:1px solid black;
+    border-radius: 1vh;
+    height:90%;
+    margin-top:2vh;
+    padding-bottom: 3vh;
+`
+;
 function MyPageLayout(){   
     let navigate = useNavigate();
     return(
     <Container>
-        <Menu>
+        <LEFT>
             <Nav>
                 <Profile>
                     <ProfileImage>
@@ -82,14 +104,17 @@ function MyPageLayout(){
                 <NavMenu onClick={()=>navigate("/myPage/myPageSetting")}>
                     <h3>설정</h3>
                 </NavMenu>
-                <NavMenu onClick={()=>navigate("/myPage/userInfoFix")}>
+                <NavMenu onClick={()=>alert("탈퇴하지 마세요..ㅠㅠ")}>
                     <h3>회원 탈퇴</h3>
                 </NavMenu>
-               
-
             </Nav>
-        </Menu>
-        <Outlet/>
+        </LEFT>
+        <Right>
+            <Detail>
+                <Outlet/>
+            </Detail>
+        </Right>
+       
     </Container>
         )
 }

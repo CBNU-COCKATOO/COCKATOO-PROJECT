@@ -13,6 +13,7 @@ const Img = styled.img`
 const Container1 = styled.div`
     margin-top:2vh;
     border: 0.05vw solid black;
+    border-radius: 1vw;
     display: flex;
     width:17.5%;
     margin-left:10vw;

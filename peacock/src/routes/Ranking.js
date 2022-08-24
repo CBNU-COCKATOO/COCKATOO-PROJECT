@@ -19,6 +19,7 @@ const Style = styled.div`
     text-align: center;
     justify-content: center;
     align-items: center;
+    background-color: #dee2e6;
     a{
         text-decoration: none;
         color:black;
@@ -26,12 +27,12 @@ const Style = styled.div`
         padding-left:1vw;
     }
     &:hover{
-        background-color: #dee2e6;
+        background-color: white;
     }
 `
 const Container = styled.div`
     display: flex;
-    background-color: #dee2e6;
+    background-color: white;
 `;
 const Ranker = styled.div`
     width:33.3333%;
@@ -111,7 +112,7 @@ const RankerProfileInfo = styled.div`
 `;
 const NowStyle = styled.div`
     text-align: center;
-    background-color: #dee2e6;
+    background-color: white;
     justify-content: center;
     align-items: center;
     display: flex;
@@ -120,17 +121,18 @@ const NowStyle = styled.div`
         margin-top:2vh;
         width:10vw;
         height:4vh;
-        padding-top:1vh;
+        padding-top:1.3vh;
         border-radius: 3vh;
         background-color: white;
         display:inline;
         padding-left:1vw;
         padding-right:1vw;
+        border:1px solid black;
     }
 `;
 const Container2 = styled.div`
 
-background-color: #dee2e6;
+background-color: white;
 `;
 const OtherRank = styled.div`    
 `
