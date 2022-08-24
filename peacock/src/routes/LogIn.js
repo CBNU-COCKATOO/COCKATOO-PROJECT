@@ -1,7 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components"
 import {Link,useNavigate} from "react-router-dom"
-
+import { TotalId, TotalPw } from "../atoms";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 const Container = styled.div`
     justify-content: center;
     align-items: center;
@@ -51,9 +52,16 @@ function LogIn(){
     const [id,setId] = useState();
     const [pw,setPw] = useState();
     let navigate = useNavigate();
+    const setterFnId=useSetRecoilState(TotalId);
+    const setterFnPw=useSetRecoilState(TotalPw);
+    const ids = useRecoilValue(TotalId);
+    const pws = useRecoilValue(TotalPw);
     function handleClick() {
-        if(id===pw&&id!==undefined&&pw!==undefined)
-        navigate("/");
+        if(ids===id&&pw===pws&&id!==undefined&&pw!==undefined){
+            setterFnId(id);
+            setterFnPw(pw);
+            navigate("/");
+        }
       }
  
     const onChangeId = (e) =>{

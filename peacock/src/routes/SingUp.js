@@ -1,6 +1,8 @@
 import {Link} from "react-router-dom"
 import styled from "styled-components";
 import { useEffect, useState } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { TotalId, TotalPw } from "../atoms";
 
 const Container = styled.div`
     width:50%;
@@ -65,6 +67,7 @@ const Styles = styled.div`
     }
 `
 function SignUp(){
+   
     const [agree,setAgree]=useState([0,0,0]);
     const [id,setId]=useState(0);
     const [checkId,setCheckId]=useState(0);
@@ -85,6 +88,8 @@ function SignUp(){
             {status:0,name:"스타일4"},
         ]
     );
+    const setterFnId=useSetRecoilState(TotalId);
+    const setterFnPw=useSetRecoilState(TotalPw);
     const styleClick=(index)=>{
         let names = style[index].name;
         if(style[index].status)
@@ -127,8 +132,8 @@ function SignUp(){
         }
     }
     const ButtonClick=()=>{
-        let result = style.filter((item)=>item.status);
-        console.log(result)
+        setterFnId(id);
+        setterFnPw(pw);
     }
     const handleChangeId=(e)=>{
         setId(e.target.value);

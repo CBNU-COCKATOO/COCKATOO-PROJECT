@@ -1,6 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components"
 import {Link,useNavigate,Outlet} from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { TotalPw } from "../atoms";
 
 const Container = styled.div`
     display: flex;
@@ -52,7 +54,8 @@ const Logo = styled.div`
     }
 `;
 function MyPageInfoFix(){
-    let nowPw="ad";
+    const nowPw = useRecoilValue(TotalPw);
+     
     const [status,SetStatus] = useState(1);
     const [pw,setPw] = useState("");
     const [newPw,setNewPw] = useState("");
