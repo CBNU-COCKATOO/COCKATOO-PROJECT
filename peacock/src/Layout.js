@@ -1,6 +1,8 @@
 import { Outlet } from 'react-router-dom';
 import styled from "styled-components";
 import {Link} from "react-router-dom"
+import { useRecoilValue,useSetRecoilState } from 'recoil';
+import { LoginStatus,TotalId,TotalPw } from './atoms';
 
 const Container = styled.div`
   display : flex ;
@@ -51,9 +53,17 @@ const Search = styled.input`
   font-family: Arial, Helvetica, sans-serif,bold;
   text-align: center;
   width:12vw;
-
 `;
 const Layout = () => {
+  const loginStatus = useRecoilValue(LoginStatus);
+  const setterLoginStatus=useSetRecoilState(LoginStatus);
+  const setterFnId=useSetRecoilState(TotalId);
+  const setterFnPw=useSetRecoilState(TotalPw);
+  const logout=()=>{
+    setterLoginStatus(0);
+    setterFnId("");
+    setterFnPw("");
+  }
   return (
     <div>
       <header style={{backgroundColor:"black",color:"white",padding: 16, fontSize: 48, fontWeight:'bold',textAlign:'center',borderBottom:"0.1vw solid white"}}>
@@ -77,9 +87,14 @@ const Layout = () => {
           <Link to="./myPage/myPageInfoFix" style={{width:"33.333%"}}>
             <Menu><h3>마이페이지</h3></Menu>
         </Link>
+        {!loginStatus?
           <Link to="./logIn" style={{width:"33.333%"}}>
             <Menu><h3>로그인</h3></Menu>
-        </Link>
+        </Link>:
+        <Link onClick={logout} to="./logIn" style={{width:"33.333%"}}>
+        <Menu><h3>로그아웃</h3></Menu>
+    </Link>
+        }
         </Container>
       </div>
       <main>

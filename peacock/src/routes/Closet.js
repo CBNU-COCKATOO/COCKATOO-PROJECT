@@ -1,8 +1,10 @@
-import { useParams,Link } from 'react-router-dom';
+import { useParams,Link,useNavigate } from 'react-router-dom';
+import React, { useRef,useCallback,useState } from 'react';
 import styled from "styled-components";
 import Slider from "react-slick";
 import "../slick.css";
 import "../slick-theme.css";
+import Modal from "../modal"
 
 const Img = styled.img`
     min-width:10vw;
@@ -81,9 +83,55 @@ const Wrap = styled.div`
         object-fit: contain;
     }
 `;
-  
+const ModalDetail = styled.div`
+    display: flex;
+    border: 1px solid black;
+    border-top:0;
+    text{
+        padding:0.5vw;
+        font-weight: bold;
+    }
+`;
+const ModalDetails = styled.div`
+    border-left: 1px solid black;
+    padding:1vh;
+    width:70%;
+    text-align: center;
+    display:inline;
+`;
+const Input = styled.input`
+    border:0;
+    border-left:1px solid black;
+    text-align: center;
+    width:80%;
+`;
   function Closet(){
- 
+    const inputRef = useRef(null);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [clicked,setClicked] = useState({});
+
+    const openModal = (item) => {
+      setModalOpen(1);
+      setClicked(item);
+    };
+    const closeModal = () => {
+      setModalOpen(0);
+    };
+    const fixModal = () =>{
+        setModalOpen(2);
+    }
+    const onChangeCodi =useCallback((e)=>{
+        if(!e.target.files)return;
+        const formData = new FormData();
+         formData.append('image', e.target.files[0]);
+         console.log(e.target.files[0]);
+    },[]);
+
+    const uploadCodyClick = useCallback(()=>{
+        if(!inputRef.current)return;
+        inputRef.current.click();
+    },[]);
+      
     const userinfo={
             nakhyeon:{
                 name:'권낙현',
@@ -93,13 +141,12 @@ const Wrap = styled.div`
                 style:'캐주얼',
                 img:"https://user-images.githubusercontent.com/44117975/183907930-7f851b6c-ff86-4638-81fc-e2fb6996d5eb.png",
                 codi:[  
-                
-                    "https://i.ibb.co/kKMCQQP/image.jpg",
-                    "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d64c8610f87.jpg",
-                    "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d65fa7e3c11.jpg",
-                    "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d74cf0e1bf5.jpg",
-                    "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d75473f3e80.jpg",
-                    "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d762e15fb95.jpg",
+                    {url:"https://i.ibb.co/kKMCQQP/image.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+                    {url:"https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d64c8610f87.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"유신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+                    {url:"https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d65fa7e3c11.jpg",name:"평범한 하루",style:"스트릿",size:"L",mall:"추신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+                    {url:"https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d74cf0e1bf5.jpg",name:"평범한 하루",style:"캐주얼",size:"S",mall:"쿠신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+                    {url:"https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d75473f3e80.jpg",name:"평범한 하루",style:"캐주얼",size:"SM",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+                    {url:"https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d762e15fb95.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
                 ],
                 top:["https://image.msscdn.net/images/goods_img/20200826/1563621/1563621_2_220.jpg",
                     "https://image.msscdn.net/images/goods_img/20200910/1595528/1595528_4_220.jpg",
@@ -175,13 +222,12 @@ const Wrap = styled.div`
             style:'캐주얼',
             img:"https://user-images.githubusercontent.com/44117975/183907930-7f851b6c-ff86-4638-81fc-e2fb6996d5eb.png",
             codi:[  
-               
-                 "https://i.ibb.co/kKMCQQP/image.jpg",
-                "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d64c8610f87.jpg",
-                "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d65fa7e3c11.jpg",
-                "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d74cf0e1bf5.jpg",
-                "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d75473f3e80.jpg",
-                "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d762e15fb95.jpg",
+                {url:"https://i.ibb.co/kKMCQQP/image.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사"},
+                {url:"https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d64c8610f87.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사"},
+               { url:"https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d65fa7e3c11.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사"},
+               { url:"https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d74cf0e1bf5.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사"},
+               {url: "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d75473f3e80.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사"},
+               { url:"https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d762e15fb95.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사"},
             ],
             top:["https://image.msscdn.net/images/goods_img/20200826/1563621/1563621_2_220.jpg",
                 "https://image.msscdn.net/images/goods_img/20200910/1595528/1595528_4_220.jpg",
@@ -209,6 +255,7 @@ const Wrap = styled.div`
                 "https://image.msscdn.net/images/goods_img/20220325/2446023/2446023_1_220.jpg"],
         }
     };
+   const navigate = useNavigate();
     const params = useParams();
     const profile = userinfo[params.username];
     const settings = {
@@ -218,7 +265,7 @@ const Wrap = styled.div`
         slidesToShow: 5, //4장씩 보이게 해주세요
         slidesToScroll: 1, //1장씩 넘어가세요
     };
-      
+   
     return(
         <div>
             {profile? (
@@ -241,31 +288,53 @@ const Wrap = styled.div`
                     </Infromation>
                 </ContainerProfile>
             </Container1>
-            
             <div style={{width:"40%"}}></div>
-                
             </div>
+            <Modal open={modalOpen} close={closeModal} fix={fixModal} header="상세보기">
+                                <div style={{display:"flex"}}>
+                                    <div style={{width:"45%"}}>
+                                        <img style={{maxHeight:"45vh",maxWidth:"15vw",minHeight:"45vh",minWidth:"15vw"}} src={clicked.url} alt="clickImage"/>
+                                    </div>
+                                    <div style={{width:"50%"}}>
+                                        <ModalDetail style={{borderTop:"1px solid black"}}><text>사진명</text>{modalOpen===1?<ModalDetails>{clicked.name}</ModalDetails>:<Input placeholder={clicked.name}/>}</ModalDetail>
+                                        <ModalDetail><text>판매처</text>{modalOpen===1?<ModalDetails>{clicked.mall}</ModalDetails>:<Input placeholder={clicked.mall}/>}</ModalDetail>
+                                        <ModalDetail><text>사이즈</text>{modalOpen===1?<ModalDetails>{clicked.size}</ModalDetails>:<Input placeholder={clicked.size}/>}</ModalDetail>
+                                        <ModalDetail><text>스타일</text>{modalOpen===1?<ModalDetails>{clicked.style}</ModalDetails>:<Input placeholder={clicked.style}/>}</ModalDetail>
 
+                                        <div style={{display:"flex",justifyContent:"center",alignItems:"center",flexDirection:"column",marginTop:"2vh"}}>
+                                            <div style={{height:"3vh",border:"1px solid black",width:"100%",textAlign:"center",paddingTop:"0.5vh"}}>
+                                                간단한 소개
+                                            </div>
+                                            <div style={{height:"22vh",border:"1px solid black",borderTop:"0",width:"100%",textAlign:"center",overflow:"scroll"}}>
+                                               {clicked.review}
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+            </div>
+            </Modal>
             <ContainerMycodi>
-                <H1>Cody</H1>
+              <H1>Cody</H1><button onClick={()=>navigate("./closetAdd")}>옷 등록하기</button>     
                 <Mycodi>
                 <Wrap>
                     <Slider {...settings}>
                     {profile.codi.map((item)=>{
                         return (
+                            <React.Fragment>
                             <div>
-                                <img src={item} alt="codi" />
+                                <img onClick={()=>openModal(item)} src={item.url} alt="codi" />
                             </div>
+                            </React.Fragment>
                         );
                     })}
                     </Slider>
-                            
                 </Wrap>
                 </Mycodi>
             </ContainerMycodi>
 
             <ContainerMycodi>
-                <H1>Top</H1>
+           <H1>Top</H1>
+             
                 <Mytop>
                 <Wrap>
                     <Slider {...settings}>
@@ -283,7 +352,7 @@ const Wrap = styled.div`
             </ContainerMycodi>    
 
             <ContainerMycodi>
-                <H1>Bottom</H1>
+           <H1>Pants</H1>
                 <Mypants>
                 <Wrap>
                     <Slider {...settings}>
@@ -300,7 +369,8 @@ const Wrap = styled.div`
             </ContainerMycodi> 
 
             <ContainerMycodi>
-                <H1>Shoes</H1>
+           <H1>Shoes</H1>
+
                 <Mypants>
                 <Wrap>
                     <Slider {...settings}>
