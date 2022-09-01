@@ -1,29 +1,40 @@
-import { useParams,Link,useNavigate } from 'react-router-dom';
-import React, {useState,useRef,useCallback } from 'react';
-import styled from "styled-components";
-import Slider from "react-slick";
-import Modal from "../modal"
+import React, { useState ,useForm} from 'react';
+import ReactQuill from 'react-quill';
+import '../quill.snow.css';
 
-const Container = styled.div`
 
-`;
 function ClosetAdd(){   
-  const [modalOpen, setModalOpen] = useState(false);
+  const [read,setRead]=useState("");
 
-  const openModal = () => {
-    setModalOpen(true);
-  };
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-  return (
-    <React.Fragment>
-      <button onClick={openModal}>모달팝업</button>
-      <Modal open={modalOpen} close={closeModal} header="Modal heading">
-        팝업창입니다. 쉽게 만들 수 있어요. 같이 만들어봐요!
-      </Modal>
-    </React.Fragment>
-  );
+  function onChangeMyEdit(value) {
+    setRead(value);
+  }
+  const modules = {
+    toolbar: {
+        container: [
+          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+          [{ 'font': [] }],
+          [{ 'align': [] }],
+          ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+          [{ 'list': 'ordered' }, { 'list': 'bullet' }, 'link'],
+          [{ 'color': ['#000000', '#e60000', '#ff9900', '#ffff00', '#008a00', '#0066cc', '#9933ff', '#ffffff', '#facccc', '#ffebcc', '#ffffcc', '#cce8cc', '#cce0f5', '#ebd6ff', '#bbbbbb', '#f06666', '#ffc266', '#ffff66', '#66b966', '#66a3e0', '#c285ff', '#888888', '#a10000', '#b26b00', '#b2b200', '#006100', '#0047b2', '#6b24b2', '#444444', '#5c0000', '#663d00', '#666600', '#003700', '#002966', '#3d1466', 'custom-color'] }, { 'background': [] }],
+          ['image', 'video'],
+          ['clean']  
+        ],
+    }
 }
 
+ 
+
+  return(
+    <div className="text-editor">
+    <ReactQuill theme="snow"
+                modules={modules}
+                onChange={onChangeMyEdit}>
+    </ReactQuill>
+    <div dangerouslySetInnerHTML={{__html: read}}/>
+  </div>
+  )
+
+}
 export default ClosetAdd;
