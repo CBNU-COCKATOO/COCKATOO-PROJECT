@@ -91,6 +91,7 @@ const RankerProfileImg = styled.div`
 `;
 const RankerProfileInfo = styled.div`
     padding-left:1.5vw;
+    
     h3{
         font-weight: bold;
         margin : 1.5vh;
@@ -99,7 +100,7 @@ const RankerProfileInfo = styled.div`
         padding-right: 0;
         border:0.07vw solid black;
         text-align: center;
-        border-radius: 3vh;
+        border-radius: 1vh;
         width:6vw;
         font-size:1vw;
               
@@ -167,7 +168,7 @@ const RankProfile =styled.div`
         padding-right: 0;
         border:0.07vw solid black;
         text-align: center;
-        border-radius: 3vh;
+        border-radius: 1vh;
         width:6vw;
         font-size:0.8vw;  
         
@@ -201,7 +202,7 @@ const userinfo = [
     {
         nicname:"서기",
         userId:"nakhyeon",
-        follower:100000,
+        follower:2,
         height:"177cm",
         weight:"67kg",
         style:"스트릿",
@@ -219,7 +220,8 @@ const userinfo = [
     },
     {
         nicname:"지연",
-        follower:313,
+        userId:"jiyeon",
+        follower:99999,
         height:"172cm",
         weight:"63kg",
         style:"스트릿",

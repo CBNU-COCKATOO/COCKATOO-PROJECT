@@ -56,7 +56,7 @@ function LogIn(){
     const setterFnPw=useSetRecoilState(TotalPw);
     const setterLoginStatus=useSetRecoilState(LoginStatus);
 
-    function handleClick() {
+    function onClickLoginHandler() {
         // if(ids===id&&pw===pws&&id!==undefined&&pw!==undefined){
             setterFnId(id);
             setterFnPw(pw);
@@ -75,7 +75,7 @@ function LogIn(){
             <Container>
                 <ID><Input onChange={onChangeId} placeholder="ID"></Input></ID>
                 <PW><Input type="password"onChange={onChangePw}placeholder="PW"></Input></PW>
-                <Login><Button onClick={handleClick}>로그인</Button></Login>
+                <Login><Button onClick={onClickLoginHandler}>로그인</Button></Login>
                 <Login><Button onClick={()=>{navigate("/signUp")}}>회원가입</Button></Login>
                 <Find style={{display:"flex"}}>
                     <Link to="./idFind"><h3>아이디 찾기</h3></Link>

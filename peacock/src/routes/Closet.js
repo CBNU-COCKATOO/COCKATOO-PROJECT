@@ -42,7 +42,55 @@ const Mytop = styled(Mycodi)`
 const Mypants = styled(Mycodi)`
 `
 const ContainerMycodi = styled.div`
-   
+    .plus{
+        border-radius:50%;
+        border: 1px solid black;
+        width:3vw;
+        height:6vh;
+        font-size: 2vw;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        right:2vw;
+        bottom:2vh;
+        &:hover{
+            transform: scale(1.2);
+        }
+    }
+    .addCloth{
+        max-width: 2vw;
+        min-width:2vw;
+        border: 1px solid black;
+        border-radius: 50%;
+        padding:0.5vw;
+        right:2vw;
+        position: fixed;
+        animation: fadein 0.8s;
+        -moz-animation: fadein 0.8s; 
+        -webkit-animation: fadein 0.8s;
+        -o-animation: fadein 0.8s; 
+        &:hover{
+            transform: scale(1.2);
+        }
+        transition: all 0.8s;
+        @keyframes fadein {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+        }
+        @keyframes fadeout {
+        from {
+            opacity: 1;
+        }
+        to {
+            opacity: 0;
+        }
+        }
+    }
 `;
 const Infromation = styled.div`
     text-align: left;
@@ -55,7 +103,7 @@ const Profile = styled.div`
     padding-right: 0;
     border:0.07vw solid black;
     text-align: center;
-    border-radius: 3vh;
+    border-radius: 1vh;
     width:6vw;
     font-size:1vw;
 `;
@@ -82,7 +130,11 @@ const Wrap = styled.div`
         margin-left:3vw;  
         max-width: 70%;
         height:30vh;
-        object-fit: contain;
+        object-fit: contain; 
+        &:hover{
+            transform: scale(1.1);
+        }
+        transition: all 0.8s;
     }
 `;
 const ModalDetail = styled.div`
@@ -112,7 +164,7 @@ const Input = styled.input`
     const [modalOpen, setModalOpen] = useState(false);
     const [clicked,setClicked] = useState({});
     const [read,setRead]=useState("");
-
+    const [add,setAdd] = useState(0);
     const openModal = (item) => {
       setModalOpen(1);
       setClicked(item);
@@ -121,7 +173,7 @@ const Input = styled.input`
       setModalOpen(0);
     };
     const fixModal = () =>{
-        setModalOpen(2);
+      setModalOpen(2);
     }
     const onChangeCodi =useCallback((e)=>{
         if(!e.target.files)return;
@@ -134,7 +186,7 @@ const Input = styled.input`
         if(!inputRef.current)return;
         inputRef.current.click();
     },[]);
-      
+   
     const userinfo={
             nakhyeon:{
                 name:'권낙현',
@@ -182,7 +234,7 @@ const Input = styled.input`
             kg:'67kg',
             height:'186cm',
             style:'캐주얼',
-            img:"https://user-images.githubusercontent.com/44117975/183907930-7f851b6c-ff86-4638-81fc-e2fb6996d5eb.png",
+            img:"https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62fc963162d87.jpg",
             codi:[  
                
                  "https://i.ibb.co/kKMCQQP/image.jpg",
@@ -271,8 +323,13 @@ const Input = styled.input`
    
 
   function onChangeMyEdit(value) {
-    setRead(value);
+    value=encodeURI(value);
+    setRead(decodeURI(value));
   }
+
+  const onClickAddButton = () =>{
+    setAdd(!add);
+  }  
   const modules = {
     toolbar: {
         container: [
@@ -319,9 +376,9 @@ const Input = styled.input`
                                         <ModalDetail><text>판매처</text>{modalOpen===1?<ModalDetails>{clicked.mall}</ModalDetails>:<Input placeholder={clicked.mall}/>}</ModalDetail>
                                         <ModalDetail><text>사이즈</text>{modalOpen===1?<ModalDetails>{clicked.size}</ModalDetails>:<Input placeholder={clicked.size}/>}</ModalDetail>
                                         <ModalDetail><text>스타일</text>{modalOpen===1?<ModalDetails>{clicked.style}</ModalDetails>:<Input placeholder={clicked.style}/>}</ModalDetail>
-
+                                        
                                         <div style={{display:"flex",justifyContent:"center",alignItems:"center",flexDirection:"column",marginTop:"2vh"}}>
-                                            <div style={{height:"3vh",border:"1px solid black",width:"100%",textAlign:"center",paddingTop:"0.5vh"}}>
+                                            <div style={{height:"3vh",border:"1px solid black",width:"100%",textAlign:"center",fontWeight:"bold",paddingTop:"0.5vh"}}>
                                                 간단한 소개
                                             </div>
                                             <div style={{height:"22vh",border:"1px solid black",borderTop:"0",width:"100%",textAlign:"center",overflow:"scroll"}}>
@@ -342,7 +399,16 @@ const Input = styled.input`
             </div>
             </Modal>
             <ContainerMycodi>
-              <H1>Cody</H1><button onClick={()=>navigate("./closetAdd")}>옷 등록하기</button>     
+            
+              <H1>Cody</H1>{!add?<button class="plus" onClick={onClickAddButton}>+</button>
+              :<div>
+                <div>
+                <img class="addCloth"  style={{bottom:"30vh"}} src="https://cdn-icons-png.flaticon.com/512/2422/2422049.png" alt="addCody"/>
+                <img class="addCloth"  style={{bottom:"23vh"}} src="https://cdn-icons-png.flaticon.com/512/863/863684.png" alt="addTop"/>
+                <img class="addCloth"  style={{bottom:"16vh"}} src="https://cdn-icons-png.flaticon.com/512/664/664466.png" alt="addPants"/>
+                <img class="addCloth"  style={{bottom:"9vh"}} src="https://cdn-icons-png.flaticon.com/128/500/500225.png" alt="addShoes"/>
+                <button class="plus" onClick={onClickAddButton}>+</button></div>
+              </div>}    
                 <Mycodi>
                 <Wrap>
                     <Slider {...settings}>
@@ -398,7 +464,6 @@ const Input = styled.input`
 
             <ContainerMycodi>
            <H1>Shoes</H1>
-
                 <Mypants>
                 <Wrap>
                     <Slider {...settings}>
