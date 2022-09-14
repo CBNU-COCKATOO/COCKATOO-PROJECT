@@ -202,7 +202,7 @@ const userinfo = [
     {
         nicname:"서기",
         userId:"nakhyeon",
-        follower:2,
+        follower:1231031,
         height:"177cm",
         weight:"67kg",
         style:"스트릿",
@@ -224,7 +224,7 @@ const userinfo = [
         follower:99999,
         height:"172cm",
         weight:"63kg",
-        style:"스트릿",
+        style:"캐주얼",
         img:"https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62fc963162d87.jpg",
         codi:[  
            
@@ -241,7 +241,7 @@ const userinfo = [
         height:"164cm",
         follower:22,
         weight:"62kg",
-        style:"스트릿",
+        style:"미니멀",
         img:"https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62fb5f7980d7f.jpg",
         codi:[  
            
@@ -258,7 +258,7 @@ const userinfo = [
         height:"164cm",
         follower:232,
         weight:"62kg",
-        style:"스트릿",
+        style:"스타일1",
         img:"https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d74cf0e1bf5.jpg",
         codi:[  
             "https://i.ibb.co/kKMCQQP/image.jpg",
@@ -274,7 +274,7 @@ const userinfo = [
         height:"164cm",
         follower:1222,
         weight:"62kg",
-        style:"스트릿",
+        style:"스타일2",
         img:"https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62fda6dd7d3f1.jpg",
         codi:[  
            
@@ -311,7 +311,41 @@ const userinfo = [
         height:"164cm",
         follower:2782,
         weight:"62kg",
-        style:"스트릿",
+        style:"캐주얼",
+        img:"https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62fdbdab31743.jpg",
+        codi:[  
+           
+            "https://i.ibb.co/kKMCQQP/image.jpg",
+           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d64c8610f87.jpg",
+           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d65fa7e3c11.jpg",
+           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d74cf0e1bf5.jpg",
+           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d75473f3e80.jpg",
+           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d762e15fb95.jpg",
+       ],
+    },
+    {
+        nicname:"샘성",
+        height:"164cm",
+        follower:2782,
+        weight:"62kg",
+        style:"캐주얼",
+        img:"https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62fdbdab31743.jpg",
+        codi:[  
+           
+            "https://i.ibb.co/kKMCQQP/image.jpg",
+           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d64c8610f87.jpg",
+           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d65fa7e3c11.jpg",
+           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d74cf0e1bf5.jpg",
+           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d75473f3e80.jpg",
+           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d762e15fb95.jpg",
+       ],
+    },
+    {
+        nicname:"샘성",
+        height:"164cm",
+        follower:2782,
+        weight:"62kg",
+        style:"캐주얼",
         img:"https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62fdbdab31743.jpg",
         codi:[  
            
@@ -328,7 +362,7 @@ const userinfo = [
         height:"164cm",
         follower:22548,
         weight:"62kg",
-        style:"스트릿",
+        style:"미니멀",
         img:"https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62fdc40f9e382.jpg",
         codi:[  
            
@@ -371,7 +405,8 @@ function Ranking(){
             <h3>{defalutStyle}</h3>
         </NowStyle>
         <Container>
-            {userinfo.sort(function comperator(a,b){
+            {userinfo.filter((item)=>item.style===defalutStyle)
+            .sort(function comperator(a,b){
                             if(a.follower>b.follower)return -1;
                             else if(a.follower<b.follower)return 1;
                             else return 0;
@@ -418,7 +453,7 @@ function Ranking(){
         </Container>
         <Container2>
         <OtherRank>
-        {userinfo.sort(function comperator(a,b){
+        {userinfo.filter((item)=>item.style===defalutStyle).sort(function comperator(a,b){
                         if(a.follower>b.follower)return -1;
                         else if(a.follower<b.follower)return 1;
                         else return 0;

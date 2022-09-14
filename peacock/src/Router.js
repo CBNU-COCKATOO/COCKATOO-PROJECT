@@ -1,4 +1,4 @@
-import {BrowserRouter,Routes,Route, useNavigate} from "react-router-dom";
+import {BrowserRouter,useParams,Routes,Route, useNavigate} from "react-router-dom";
 import Closet from "./routes/Closet";
 import Main from "./routes/Main";
 import Ranking from "./routes/Ranking";
@@ -22,7 +22,7 @@ function Router(){
             <Route element={<Layout />}>
             <Route path="/" element={<Main/>}></Route>
             <Route path="/closet/:username" element={<Closet/>}></Route>
-            <Route path="/closet/:username/closetAdd" element={<ClosetAdd/>}></Route>
+            <Route path="/closet/:username/closetAdd/:where" element={<ClosetAdd/>}></Route>
             <Route path="/ranking" element={<Ranking/>}></Route>
             <Route path="/dictionary" element={<Dictionary/>}></Route>
             <Route  element={<MyPageLayout/>}>

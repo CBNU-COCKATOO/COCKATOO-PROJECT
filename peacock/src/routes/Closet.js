@@ -42,7 +42,7 @@ const Mytop = styled(Mycodi)`
 const Mypants = styled(Mycodi)`
 `
 const ContainerMycodi = styled.div`
-    .plus{
+    .plus{  
         border-radius:50%;
         border: 1px solid black;
         width:3vw;
@@ -323,7 +323,9 @@ const Input = styled.input`
    
 
   function onChangeMyEdit(value) {
+    
     value=encodeURI(value);
+    console.log(decodeURI(value));
     setRead(decodeURI(value));
   }
 
@@ -395,18 +397,17 @@ const Input = styled.input`
                                             </div>
                                         </div>
                                     </div>
-                                   
-            </div>
+                                 </div>
             </Modal>
             <ContainerMycodi>
             
               <H1>Cody</H1>{!add?<button class="plus" onClick={onClickAddButton}>+</button>
               :<div>
                 <div>
-                <img class="addCloth"  style={{bottom:"30vh"}} src="https://cdn-icons-png.flaticon.com/512/2422/2422049.png" alt="addCody"/>
-                <img class="addCloth"  style={{bottom:"23vh"}} src="https://cdn-icons-png.flaticon.com/512/863/863684.png" alt="addTop"/>
-                <img class="addCloth"  style={{bottom:"16vh"}} src="https://cdn-icons-png.flaticon.com/512/664/664466.png" alt="addPants"/>
-                <img class="addCloth"  style={{bottom:"9vh"}} src="https://cdn-icons-png.flaticon.com/128/500/500225.png" alt="addShoes"/>
+                <img class="addCloth"  onClick={()=>navigate(`./closetAdd/Cody`)} style={{bottom:"30vh"}} src="https://cdn-icons-png.flaticon.com/512/2422/2422049.png" alt="addCody"/>
+                <img class="addCloth"  onClick={()=>navigate(`./closetAdd/Top`)} style={{bottom:"23vh"}} src="https://cdn-icons-png.flaticon.com/512/863/863684.png" alt="addTop"/>
+                <img class="addCloth"  onClick={()=>navigate(`./closetAdd/Pants`)} style={{bottom:"16vh"}} src="https://cdn-icons-png.flaticon.com/512/664/664466.png" alt="addPants"/>
+                <img class="addCloth"  onClick={()=>navigate(`./closetAdd/Shoes`)} style={{bottom:"9vh"}} src="https://cdn-icons-png.flaticon.com/128/500/500225.png" alt="addShoes"/>
                 <button class="plus" onClick={onClickAddButton}>+</button></div>
               </div>}    
                 <Mycodi>
