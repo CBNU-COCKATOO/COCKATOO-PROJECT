@@ -7,6 +7,7 @@ import "../slick-theme.css";
 import Modal from "../modal"
 import ReactQuill from 'react-quill';
 import '../quill.snow.css';
+import '../index.css'
 
 const Img = styled.img`
     min-width:10vw;
@@ -15,6 +16,8 @@ const Img = styled.img`
     max-height: 25vh;
 `;
 const Container1 = styled.div`
+    font-family: "SUIT";
+   
     margin-top:2vh;
     border: 0.05vw solid black;
     border-radius: 1vw;
@@ -119,6 +122,7 @@ const Sns = styled.div`
 const H1 = styled.h1`
     margin-left:10vw;
     margin-bottom:1vh;
+    font-family: "SUIT";
 `;
 const Wrap = styled.div`
     width:80vw;

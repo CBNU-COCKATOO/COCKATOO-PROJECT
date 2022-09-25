@@ -145,9 +145,9 @@ function onChangeMyEdit(value) {
       <div>
         <div style={{width:"30vw",justifyContent:"center",alignItems:"center",display:"flex",height:"82vh"}}>
         <img 
-        style={{width:"25vw",maxWidth:"30vw",height:"78vh",maxHeight:"78vh"} } 
+        style={{width:"25vw",maxWidth:"30vw",height:"78vh",maxHeight:"78vh",border:"1px solid black"} } 
         onClick={onClickFileBtn}
-        src={imageUrl ? imageUrl : "https://user-images.githubusercontent.com/44117975/190191247-8e0e1c91-9b89-40e6-ae4f-0f3b1cb9787b.PNG"}
+        src={imageUrl ? imageUrl : "https://user-images.githubusercontent.com/44117975/190329322-2a5b0016-68a4-4b43-a92a-45838e347052.PNG"}
         alt="AddImg"
         />
         </div>
