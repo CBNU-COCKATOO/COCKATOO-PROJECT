@@ -1,9 +1,10 @@
+import './index.css'
 import { Outlet,Link,useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useRecoilValue,useSetRecoilState } from 'recoil';
 import { useState } from 'react';
 import { LoginStatus } from './atoms'
-import './index.css'
+
 const Header = styled.div`
    display: flex;
    width:100%;
@@ -79,7 +80,7 @@ const Login = styled.div`
 margin-top:1.3vh;
   width:5%;`;
 
-const Layout = () => {
+function Layout(){
   const [state,setState]=useState(0);
   const navigate=useNavigate();
   const loginStatus = useRecoilValue(LoginStatus);
@@ -113,7 +114,7 @@ const Layout = () => {
     <div>
         <Header>
             <Head>
-                <Logo onClick={onClickLogo}><img style={{width:"90%",height:"160%",objectFit:"fill"}} src="https://user-images.githubusercontent.com/44117975/191046781-fcaf525d-664f-49e7-a135-56c26781179b.png" alt="jjowinLogo"></img></Logo>
+                <Logo onClick={onClickLogo}><img style={{width:"90%",height:"160%",objectFit:"fill"}} src="https://user-images.githubusercontent.com/44117975/191046781-fcaf525d-664f-49e7-a135-56c26781179b.png" alt="jjowinLogo"/></Logo>
                 {state===1?
                 <MyCloset>
                   <h3 style={{fontWeight:"bold",color:"#7939FF"}} onClick={onClickMyCloset}>나의 옷장</h3>

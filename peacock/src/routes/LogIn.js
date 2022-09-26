@@ -23,7 +23,7 @@ const Container1 = styled.div`
         margin:0;
         margin-left:2vw;
         color:white;
-        font-family: 'SUIT';
+        font-family: 'Pretendard';
         font-weight: 600;
 
     }
@@ -32,7 +32,7 @@ const Container1 = styled.div`
         margin-left:2vw;
         margin-top:1vh;
         color:darkgray;
-        font-family: 'SUIT';
+        font-family: 'Pretendard';
         font-weight: 100;
         font-size:0.8vw;
     }
@@ -70,10 +70,9 @@ const Login = styled.div`
         cursor: pointer;
         color:white;
         background-color:#B0B0B0;
-        font-family: 'SUIT';
+        font-family: 'Pretendard';
         &:hover{
             background-color:#7939FF;
-            color:white;
         }
     }
     .register{
@@ -81,8 +80,12 @@ const Login = styled.div`
         color:#747474;
         background-color: white;
         border:1px solid #747474;
-        font-family: 'SUIT';
+        font-family: 'Pretendard';
         font-weight: 500;
+        &:hover{
+            color:gray;
+            font-weight: bold;
+        }
     }
 `
 const Input = styled.input`
@@ -115,7 +118,7 @@ const Find = styled.div`
     h3{
         font-size: 0.7vw;
         color:#747474;
-        font-family: 'SUIT';
+        font-family: 'Pretendard';
         font-weight: 400;
     }
 `;
