@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components"
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
@@ -319,36 +319,36 @@ const More = styled.button`
 
 
 function Main(){
-    let now = new Date();
-    let year=now.getFullYear();
-    let todayMonth = now.getMonth()+1;
-    if(todayMonth<10)todayMonth='0'+todayMonth;
-    let todayDate = now.getDate();
-    const navigate = useNavigate();
-    const ids = useRecoilValue(TotalId);
-    const pws = useRecoilValue(TotalPw);
-    const [pidNum,setPidNum]=useState(2);
+    const now = new Date()
+    const year=now.getFullYear()
+    let todayMonth = now.getMonth()+1
+    if(todayMonth<10)todayMonth='0'+todayMonth
+    let todayDate = now.getDate()
+    const navigate = useNavigate()
+    // const ids = useRecoilValue(TotalId);
+    // const pws = useRecoilValue(TotalPw);
+    const [pidNum,setPidNum]=useState(2)
 
     const settings = {
         dots: false,  // 점은 안 보이게
         infinite: false, // 무한으로 즐기게
         speed: 500,
-        slidesToShow: 3, //4장씩 보이게 해주세요
-        slidesToScroll: 1, //1장씩 넘어가세요
+        slidesToShow: 3, // 4장씩 보이게 해주세요
+        slidesToScroll: 1, //   1장씩 넘어가세요
     };
     const settings2 = {
         dots: false,  // 점은 안 보이게
         infinite: true, // 무한으로 즐기게
         speed: 500,
-        slidesToShow: 4, //4장씩 보이게 해주세요
-        slidesToScroll: 1, //1장씩 넘어가세요
+        slidesToShow: 4, // 4장씩 보이게 해주세요
+        slidesToScroll: 1, //   1장씩 넘어가세요
     };
     const settings3 = {
         dots: false,  // 점은 안 보이게
         infinite: false, // 무한으로 즐기게
         speed: 500,
-        slidesToShow: 5.5, //4장씩 보이게 해주세요
-        slidesToScroll: 3, //1장씩 넘어가세요
+        slidesToShow: 5.5, //   4장씩 보이게 해주세요
+        slidesToScroll: 3, //   1장씩 넘어가세요
     };
     const rankUser = [
         {rank:1,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",
@@ -431,17 +431,17 @@ function Main(){
             <Page>
                 <TodayRanking>
                     <TRtitle>
-                        <div className="todayRanking">Today's ranking</div>
+                        <div className="todayRanking">Today&apos;s ranking</div>
                         <div className="today">{year}.{todayMonth}.{todayDate}</div>
-                        <button onClick={()=>navigate('/ranking')}>전체 랭킹 확인하기</button>
-                        <div className="todayLine"></div>
-                        <div class="todayLetter">피콕이 매일 선정하는<br/>옷장 순위를 확인해보세요!</div>
+                        <button type="button" onClick={()=>navigate('/ranking')}>전체 랭킹 확인하기</button>
+                        <div className="todayLine"/>
+                        <div className="todayLetter">피콕이 매일 선정하는<br/>옷장 순위를 확인해보세요!</div>
                     </TRtitle>
                     <TRSlider>
                         <Slider {...settings}>
-                            {rankUser.map((item)=>{
+                            {rankUser.map((item,index)=>{
                                 return(
-                                    <Ranking>
+                                    <Ranking key={index}>
                                         <div className="rankings">
                                         <RankingSt>{item.rank}st</RankingSt>
                                         <RnakingImg>
@@ -450,17 +450,17 @@ function Main(){
                                          <RankingProfile>
                                             <div className="rankName">{item.name}</div>
                                             <div className="rankFollower">{item.follwer}</div>
-                                            <button className="followingBtn">팔로잉</button>
+                                            <button type="button" className="followingBtn">팔로잉</button>
                                         </RankingProfile>
                                         <RankingCmkg>
                                             <div>{item.cm}cm {item.kg}kg {item.style}</div>
                                         </RankingCmkg>
-                                         <div className="todayLine"></div>
+                                         <div className="todayLine"/>
                                         <div className="rankercody">
                                         <Slider {...settings2}>
-                                            {item.cody.map((item)=>{
+                                            {item.cody.map((item,index)=>{
                                                 return(
-                                                    <img className="rnakercodys" src={item.codyImg} alt="rankerCody"/>
+                                                    <img key={index}className="rnakercodys" src={item.codyImg} alt="rankerCody"/>
                                                 )
                                             })}
                                         </Slider>
@@ -481,9 +481,9 @@ function Main(){
                     </FollowingTitle>
                     <FollowingProfile>
                         <Slider {...settings3}>
-                        {rankUser.map((item)=>{
+                        {rankUser.map((item,index)=>{
                             return(
-                                     <div style={{display:"flex",textAlign:"center"}}>
+                                     <div key={index}style={{display:"flex",textAlign:"center"}}>
                                         <img src={item.img} alt="profilesImg" className="followingProfiles"/>
                                         <Name>{item.name}</Name>
                                       </div>
@@ -492,17 +492,16 @@ function Main(){
                         </Slider>
                     </FollowingProfile>
                 </Following>
-                <div className="line"></div>
-               <div className="line" style={{width:"18vw",backgroundColor:"gray",height:"0.2vh",marginLeft:0,marginBottom:"0.1vh"} }></div>
-               
+                <div className="line"/>
+               <div className="line" style={{width:"18vw",backgroundColor:"gray",height:"0.2vh",marginLeft:0,marginBottom:"0.1vh"} }/>
                 
             </Page>
             <Page2>
                 <First>
                     <Pid>
-                    {rankUser.slice(0,pidNum).map((item)=>{
+                    {rankUser.slice(0,pidNum).map((item,index)=>{
                         return(
-                        <Pids>
+                        <Pids key={index}>
                             <div className="pids">
                             <PidImage>
                              <img className="pidimg" src={item.img} alt="ranking"/>
@@ -510,17 +509,17 @@ function Main(){
                             <PidProfile>
                                 <div className="pidName">{item.name}</div>
                                 <div className="pidFollower">{item.follwer}</div>
-                                <button className="followingBtn">팔로잉</button>
+                                <button type="button" className="followingBtn">팔로잉</button>
                             </PidProfile>
                             <PidCmKg>
                              <div>{item.cm}cm {item.kg}kg {item.style}</div>
                             </PidCmKg>
-                            <div className="todayLine"></div>
+                            <div className="todayLine"/>
                             <div className="pidCody">
                             <Slider {...settings2}>
-                            {item.cody.map((item)=>{
+                            {item.cody.map((item,index)=>{
                             return(
-                            <img className="rnakercodys" src={item.codyImg} alt="rankerCody"/>
+                            <img key={index} className="rnakercodys" src={item.codyImg} alt="rankerCody"/>
                             )
                             })}
                             </Slider>
@@ -533,9 +532,9 @@ function Main(){
                 </First>
                 <Second>
                 <Pid>
-                    {rankUser.slice(0,pidNum).map((item)=>{
+                    {rankUser.slice(0,pidNum).map((item,index)=>{
                         return(
-                        <Pids>
+                        <Pids key={index}>
                             <div className="pids">
                             <PidImage>
                              <img className="pidimg" src={item.img} alt="ranking"/>
@@ -543,17 +542,17 @@ function Main(){
                             <PidProfile>
                                 <div className="pidName">{item.name}</div>
                                 <div className="pidFollower">{item.follwer}</div>
-                                <button className="followingBtn">팔로잉</button>
+                                <button type="button"className="followingBtn">팔로잉</button>
                             </PidProfile>
                             <PidCmKg>
                              <div>{item.cm}cm {item.kg}kg {item.style}</div>
                             </PidCmKg>
-                            <div className="todayLine"></div>
+                            <div className="todayLine"/>
                             <div className="pidCody">
                             <Slider {...settings2}>
-                            {item.cody.map((item)=>{
+                            {item.cody.map((item,index)=>{
                             return(
-                            <img className="rnakercodys" src={item.codyImg} alt="rankerCody"/>
+                            <img key={index}className="rnakercodys" src={item.codyImg} alt="rankerCody"/>
                             )
                             })}
                             </Slider>
@@ -566,9 +565,9 @@ function Main(){
                 </Second>
                 <Third>
                 <Pid>
-                    {rankUser.slice(0,pidNum).map((item)=>{
+                    {rankUser.slice(0,pidNum).map((item,index)=>{
                         return(
-                        <Pids>
+                        <Pids key={index}>
                             <div className="pids">
                             <PidImage>
                              <img className="pidimg" src={item.img} alt="ranking"/>
@@ -576,17 +575,17 @@ function Main(){
                             <PidProfile>
                                 <div className="pidName">{item.name}</div>
                                 <div className="pidFollower">{item.follwer}</div>
-                                <button className="followingBtn">팔로잉</button>
+                                <button type="button" className="followingBtn">팔로잉</button>
                             </PidProfile>
                             <PidCmKg>
                              <div>{item.cm}cm {item.kg}kg {item.style}</div>
                             </PidCmKg>
-                            <div className="todayLine"></div>
+                            <div className="todayLine"/>
                             <div className="pidCody">
                             <Slider {...settings2}>
-                            {item.cody.map((item)=>{
+                            {item.cody.map((item,index)=>{
                             return(
-                            <img className="rnakercodys" src={item.codyImg} alt="rankerCody"/>
+                            <img key={index} className="rnakercodys" src={item.codyImg} alt="rankerCody"/>
                             )
                             })}
                             </Slider>

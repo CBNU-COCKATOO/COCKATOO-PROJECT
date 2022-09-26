@@ -341,7 +341,7 @@ function SignUp(){
                 <label>동의합니다</label>
             </Contianer2>
             <Contianer2>
-             <button style={{width:"80%",height:"5vh",borderRadius:"9px"}}onClick={ButtonClick}>회원가입</button>
+             <button type="button" style={{width:"80%",height:"5vh",borderRadius:"9px"}}onClick={ButtonClick}>회원가입</button>
            </Contianer2>
         </Container>
     )

@@ -6,7 +6,6 @@ import Layout from "./Layout";
 import Dictionary from "./routes/Dictionary";
 import LogIn from "./routes/LogIn";
 import SignUp from "./routes/SingUp";
-import LogInLayout from "./routes/LoginLayout";
 import MyPageLayout from "./Mypage/MypageLayout";
 import MyPageCloset from "./Mypage/MyPageCloset";
 import MyPageFollower from "./Mypage/MypageFollower";
@@ -32,10 +31,9 @@ function Router(){
                 <Route path="/myPage/myPageSetting" element={<MyPageSetting/>}></Route>
                 <Route path="/myPage/myPageStyleFix" element={<MyPageStyleFix/>}></Route>
             </Route>
-            <Route  element={<LogInLayout/>}>
-                <Route path="/logIn" element={<LogIn/>}></Route>
-                <Route path="/signUp" element={<SignUp/>}></Route>
-            </Route>
+            <Route path="/logIn" element={<LogIn/>}></Route>
+            <Route path="/signUp" element={<SignUp/>}></Route>
+            
             </Route>
         </Routes>
     </BrowserRouter>
