@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams,Link } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import styled from "styled-components"
@@ -7,19 +7,25 @@ import "../slick-theme.css";
 import Slider from "react-slick";
 
 const StyleCollect = styled.div`
+    margin-top: 8vh;
     display: flex;
-
+    margin-left:17vw;
+    gap:1vw;
 `;
 const Style = styled.div`
-    width:20%;
     font-size:0.8vw;
     font-weight: bold;
     padding-top: 1vh;
     padding-bottom: 1vh;
+    cursor: pointer;
     text-align: center;
     justify-content: center;
     align-items: center;
-    background-color: #dee2e6;
+    color:#454545;
+    border:1px solid #454545;
+    font-family: 'SUIT';
+    border-radius: 1vw;
+    padding: 0.5vw 0.7vw 0.5vw 0.7vw;
     a{
         text-decoration: none;
         color:black;
@@ -30,354 +36,254 @@ const Style = styled.div`
         background-color: white;
     }
 `
-const Container = styled.div`
+
+const Page2 = styled.div`
     display: flex;
-    background-color: white;
+    width:68%;
+    margin-top:5vh;
 `;
-const Ranker = styled.div`
-    width:33.3333%;
-    height:46vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    a{
-        text-decoration: none;
-        color:black;
-    }
-`;
-const RankerProfile = styled.div`
-    margin-top: 1vh;
-    background-color: white;
-    height:38vh;
-    width:105%;
-    border: 1px solid black;
-    border-radius: 3vw;
-    &:hover{
-        background-color: #f8f9fa;
-    }
-`;
-const RankerProfileImgInfo = styled.div`
-    display: flex;
-    padding-left:1vw;
-    padding-top:1vh;
+const First = styled.div`
+    width: 33.333%;
+    border-right: 1px solid #747474;
 
 `;
-const RankerProfileCodi = styled.div`
-    .slick-slider .slick-list{
-        border:none;
-    }
-    .slick-prev:before
-    {
-        content: '';
-
-    }
-    .slick-next:before
-    {
-        content: '';
+const Second = styled.div`
+    width: 33.333%;
+    border-right: 1px solid #747474;
+`;
+const Third = styled.div`
+    width: 33.333%;
+    border-right: 1px solid #747474;
+`;
+const Pid = styled.div`
+    width:100%;
+    .pids{
+        padding: 0 1.5vw 0 1.5vw;
 
     }
 `;
-const RankerProfileImg = styled.div`
-    width:40%;
+const PidImage = styled.div`
+    width:100%;
     img{
-        object-fit: fill;
-        width:100%;
-        border-radius: 20%;
-        max-height: 100%;
-        min-height: 100%;
+        max-width:70%;
     }
-    height:22vh;
-
 `;
-const RankerProfileInfo = styled.div`
-    padding-left:1.5vw;
-    
-    h3{
-        font-weight: bold;
-        margin : 1.5vh;
-        margin-top:1vh;
-        padding-left: 0;
-        padding-right: 0;
-        border:0.07vw solid black;
-        text-align: center;
-        border-radius: 1vh;
-        width:6vw;
+const PidProfile = styled.div`
+    .pidName{
         font-size:1vw;
-              
+        font-weight: 600;
+        display: inline;
+        font-family: 'SUIT';
     }
-    h4{
-        margin:0;
-        text-align: center;
-        font-weight: bold;
+    .pidFollower{
+        font-size:0.7vw;
+        color:#7939FF;
+        display: inline;
+        margin-left: 11.9vw;
+        font-weight: 500;
+        font-family: 'SUIT';
     }
-`;
-const NowStyle = styled.div`
-    text-align: center;
-    background-color: white;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    h3{
-        margin:0;
-        margin-top:2vh;
-        width:10vw;
-        height:4vh;
-        padding-top:1.3vh;
-        border-radius: 3vh;
-        background-color: white;
-        display:inline;
-        padding-left:1vw;
-        padding-right:1vw;
-        border:1px solid black;
+    .followingBtn{
+        cursor: pointer;
+        margin-left:0.5vw;
+        font-family: 'SUIT';
+        color:#7939FF;
+        background-color: #F5F0FF;
+        border:1px solid #7939FF;
+        border-radius: 0.5vw;
+        padding:0.5vh 0.5vw 0.5vh 0.5vw;
+        &:hover{
+            color:white;
+            background-color:#7939FF;
+        }
+    }`;
+const PidCmKg = styled.div``;
+const Pids = styled.div`
+    width:30vw;
+    .pidimg{
+      z-index: 1;
+      width:100%;
+      height:38vh;
+      object-fit: contain;
     }
-`;
-const Container2 = styled.div`
-
-background-color: white;
-`;
-const OtherRank = styled.div`    
-`
-const OtherRanking = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-`
-const Rank = styled.div`
-    width:86%;
-    border:1px solid black;
-    border-radius: 3vw;
-    height: 20vh;
-    margin-bottom: 3vh;
-    background-color: white;
-    display: flex;
-`
-const RankImg = styled.div`
-    width:10%;
-    padding-top:1vh;
-    padding-bottom:1vh;
-`;
-const RankProfile =styled.div`
-    width:10%;
-    height:100%;
-    h3{
-        font-weight: bold;
-        margin : 1.5vh;
-        margin-top:1vh;
-        padding-left: 0;
-        padding-right: 0;
-        border:0.07vw solid black;
-        text-align: center;
-        border-radius: 1vh;
-        width:6vw;
-        font-size:0.8vw;  
-        
-    
-    } 
-    h4{
-        margin:0;
-        font-weight: bold;
-        margin-right:1vw;
-    }
-`;
-const RankCodi = styled.div`
-    width:62%;
-    margin-left:4vw;
-    margin-top:1vh;
-    .slick-slider .slick-list{
+    .pidCody{
+        width:72%;
+        .slick-slider .slick-list
+    {
         border:none;
+        
+        border-radius:0;
+    }
+        margin-bottom: 5vh;
+    }
+    .rnakercodys{
+        max-width:90%;
+    }
+    .rankings{
+        padding: 0 1.5vw 0 1.5vw;
+    }
+    .todayLine{
+        width:7.5%;
+        height:0.5vh;
+        margin-bottom: 1vh;
+        margin-top: 1vh;
+        background-color: #7939ff;
     }
 `;
-const Number = styled.div`
-    width: 10%;
-    display:flex;
-    justify-content:center;
+const RankingSt =styled.div`
+    position: relative;
+    margin-bottom:-2.5vh;
+    display: flex;
+    justify-content: center;
     align-items: center;
+    color:white;
+    background-color:#333333;
+    width:3vw;
     text-align: center;
-    h4{
-        font-size:1.6vw;
-    }
+    padding-top:0.8vh;
+    padding-bottom: 0.8vh;
+
 `;
-const userinfo = [
-    {
-        nicname:"서기",
-        userId:"nakhyeon",
-        follower:1231031,
-        height:"177cm",
-        weight:"67kg",
-        style:"스트릿",
-        img:"https://user-images.githubusercontent.com/44117975/183907930-7f851b6c-ff86-4638-81fc-e2fb6996d5eb.png",
-        codi:[  
-           
-            "https://i.ibb.co/kKMCQQP/image.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d64c8610f87.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d65fa7e3c11.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d74cf0e1bf5.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d75473f3e80.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d762e15fb95.jpg",
-           
-       ],
-    },
-    {
-        nicname:"지연",
-        userId:"jiyeon",
-        follower:99999,
-        height:"172cm",
-        weight:"63kg",
-        style:"캐주얼",
-        img:"https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62fc963162d87.jpg",
-        codi:[  
-           
-            "https://i.ibb.co/kKMCQQP/image.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d64c8610f87.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d65fa7e3c11.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d74cf0e1bf5.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d75473f3e80.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d762e15fb95.jpg",
-       ],
-    },
-    {
-        nicname:"세나",
-        height:"164cm",
-        follower:22,
-        weight:"62kg",
-        style:"미니멀",
-        img:"https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62fb5f7980d7f.jpg",
-        codi:[  
-           
-            "https://i.ibb.co/kKMCQQP/image.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d64c8610f87.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d65fa7e3c11.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d74cf0e1bf5.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d75473f3e80.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d762e15fb95.jpg",
-       ],
-    },
-    {
-        nicname:"재현",
-        height:"164cm",
-        follower:232,
-        weight:"62kg",
-        style:"스타일1",
-        img:"https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d74cf0e1bf5.jpg",
-        codi:[  
-            "https://i.ibb.co/kKMCQQP/image.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d64c8610f87.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d65fa7e3c11.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d74cf0e1bf5.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d75473f3e80.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d762e15fb95.jpg",
-       ],
-    },
-    {
-        nicname:"재형",
-        height:"164cm",
-        follower:1222,
-        weight:"62kg",
-        style:"스타일2",
-        img:"https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62fda6dd7d3f1.jpg",
-        codi:[  
-           
-            "https://i.ibb.co/kKMCQQP/image.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d64c8610f87.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d65fa7e3c11.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d74cf0e1bf5.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d75473f3e80.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d762e15fb95.jpg",
-       ],
-    },
-    {
-        nicname:"강민",
-        height:"164cm",
-        follower:2221,
-        weight:"62kg",
-        style:"스트릿",
-        img:"https://image.msscdn.net/images/goods_img/20220413/2486848/2486848_2_320.jpg",
-        codi:[  
-           
-            "https://i.ibb.co/kKMCQQP/image.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d64c8610f87.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d65fa7e3c11.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d74cf0e1bf5.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d75473f3e80.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d762e15fb95.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d762e15fb95.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d762e15fb95.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d762e15fb95.jpg",
-       ],
-    },
-    {
-        nicname:"샘성",
-        height:"164cm",
-        follower:2782,
-        weight:"62kg",
-        style:"캐주얼",
-        img:"https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62fdbdab31743.jpg",
-        codi:[  
-           
-            "https://i.ibb.co/kKMCQQP/image.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d64c8610f87.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d65fa7e3c11.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d74cf0e1bf5.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d75473f3e80.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d762e15fb95.jpg",
-       ],
-    },
-    {
-        nicname:"샘성",
-        height:"164cm",
-        follower:2782,
-        weight:"62kg",
-        style:"캐주얼",
-        img:"https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62fdbdab31743.jpg",
-        codi:[  
-           
-            "https://i.ibb.co/kKMCQQP/image.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d64c8610f87.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d65fa7e3c11.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d74cf0e1bf5.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d75473f3e80.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d762e15fb95.jpg",
-       ],
-    },
-    {
-        nicname:"샘성",
-        height:"164cm",
-        follower:2782,
-        weight:"62kg",
-        style:"캐주얼",
-        img:"https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62fdbdab31743.jpg",
-        codi:[  
-           
-            "https://i.ibb.co/kKMCQQP/image.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d64c8610f87.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d65fa7e3c11.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d74cf0e1bf5.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d75473f3e80.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d762e15fb95.jpg",
-       ],
-    },
-    {
-        nicname:"은서",
-        height:"164cm",
-        follower:22548,
-        weight:"62kg",
-        style:"미니멀",
-        img:"https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62fdc40f9e382.jpg",
-        codi:[  
-           
-            "https://i.ibb.co/kKMCQQP/image.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d64c8610f87.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d65fa7e3c11.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d74cf0e1bf5.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d75473f3e80.jpg",
-           "https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d762e15fb95.jpg",
-       ],
-    }
-];
+const rankUser = [
+    {rank:1,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",
+        name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
+        cody:[
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+        ]},
+    {rank:2,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxg2tsWkRK9NU0udYZ37jaG7CjW-yjY2NQDQ&usqp=CAU",
+        name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
+        cody:[
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+        ]},
+    {rank:3,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTXuiRBqKA0qVwkVzjTZ-cLPA1n5P_pVhRug&usqp=CAU",
+        name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
+        cody:[
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+        ]},
+    {rank:4,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUW-V-jF5Frv4AdL6SY00wcwuuITIbrU3NXw&usqp=CAU",
+        name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
+        cody:[
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+        ]},
+        {rank:5,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",
+        name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
+        cody:[
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+        ]},
+    {rank:6,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxg2tsWkRK9NU0udYZ37jaG7CjW-yjY2NQDQ&usqp=CAU",
+        name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
+        cody:[
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+        ]},
+    {rank:7,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTXuiRBqKA0qVwkVzjTZ-cLPA1n5P_pVhRug&usqp=CAU",
+        name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
+        cody:[
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+        ]},
+    {rank:8,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUW-V-jF5Frv4AdL6SY00wcwuuITIbrU3NXw&usqp=CAU",
+        name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
+        cody:[
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+        ]},
+        {rank:9,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUW-V-jF5Frv4AdL6SY00wcwuuITIbrU3NXw&usqp=CAU",
+        name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
+        cody:[
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+        ]},
+        {rank:10,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",
+        name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
+        cody:[
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+        ]},
+    {rank:11,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxg2tsWkRK9NU0udYZ37jaG7CjW-yjY2NQDQ&usqp=CAU",
+        name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
+        cody:[
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+        ]},
+    {rank:12,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTXuiRBqKA0qVwkVzjTZ-cLPA1n5P_pVhRug&usqp=CAU",
+        name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
+        cody:[
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+        ]},
+    {rank:13,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUW-V-jF5Frv4AdL6SY00wcwuuITIbrU3NXw&usqp=CAU",
+        name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
+        cody:[
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+        ]},
+]
 function Ranking(){
-    const [defalutStyle,setDefaultStyle]=useState("캐주얼");
-    
+   const handleScroll=()=>{
+    const scrollHeight = document.documentElement.scrollHeight;
+    const scrollTop = document.documentElement.scrollTop;
+    const clientHeight = document.documentElement.clientHeight;
+    if(scrollTop+clientHeight>=scrollHeight)
+        setPidNum(pidNum+6);
+
+   }
+   useEffect(()=>{
+    window.addEventListener("scroll",handleScroll);
+    return()=>{
+        window.removeEventListener("scroll",handleScroll);
+    }
+   })
+   
+    const [pidNum,setPidNum]=useState(6)
+    const [styles,setStyles]=useState(0);
     let settings={
         dots: false,  // 점은 안 보이게
         infinite: true, // 무한으로 즐기게
@@ -385,112 +291,132 @@ function Ranking(){
         slidesToShow: 4, //4장씩 보이게 해주세요
         slidesToScroll: 1, //1장씩 넘어가세요
     };
-    const settings2={
-        dots: false,  // 점은 안 보이게
-        infinite: true, // 무한으로 즐기게
-        speed: 500,
-        slidesToShow: 6, //4장씩 보이게 해주세요
-        slidesToScroll: 1, //1장씩 넘어가세요
-    };
+  
+    
     return(
         <>
         <StyleCollect>
-            <Style onClick={()=>setDefaultStyle("캐주얼")}>캐주얼</Style>
-            <Style onClick={()=>setDefaultStyle("스트릿")}>스트릿</Style>
-            <Style onClick={()=>setDefaultStyle("미니멀")}>미니멀</Style>
-            <Style onClick={()=>setDefaultStyle("스타일1")}>스타일1</Style>
-            <Style onClick={()=>setDefaultStyle("스타일2")}>스타일2</Style>
+            {styles==0?<Style style={{backgroundColor:" #7939FF",color:"white"}} onClick={()=>{setStyles(0)}}>캐주얼</Style>:<Style onClick={()=>{setStyles(0)}}>캐주얼</Style>}
+            {styles==1?<Style style={{backgroundColor:" #7939FF",color:"white"}} onClick={()=>{setStyles(1)}}>스트릿</Style>: <Style onClick={()=>{setStyles(1)}}>스트릿</Style>}
+            {styles==2?<Style style={{backgroundColor:" #7939FF",color:"white"}} onClick={()=>{setStyles(2)}}>미니멀</Style>: <Style onClick={()=>{setStyles(2)}}>미니멀</Style>}
+           {styles==3? <Style style={{backgroundColor:" #7939FF",color:"white"}} onClick={()=>{setStyles(3)}}>스타일1</Style>:<Style onClick={()=>{setStyles(3)}}>스타일1</Style>}
+           {styles==4? <Style style={{backgroundColor:" #7939FF",color:"white"}} onClick={()=>{setStyles(4)}}>스타일2</Style>:<Style onClick={()=>{setStyles(4)}}>스타일2</Style>}
         </StyleCollect>
-        <NowStyle>
-            <h3>{defalutStyle}</h3>
-        </NowStyle>
-        <Container>
-            {userinfo.filter((item)=>item.style===defalutStyle)
-            .sort(function comperator(a,b){
-                            if(a.follower>b.follower)return -1;
-                            else if(a.follower<b.follower)return 1;
-                            else return 0;
-                        }).slice(0,3).map((item=>{
-                const url =`/closet/${item.userId}`;
-                return(
-                    <>
-                
-                <Ranker>
-                <Link to={url}>
-                    <RankerProfile>
-                        <RankerProfileImgInfo>
-                            <RankerProfileImg>
-                                <img src={item.img} alt="rankerimg"/>
-                            </RankerProfileImg>
-                            <RankerProfileInfo>
-                                <h3>{item.nicname}</h3>
-                                <h3>{item.height}</h3>
-                                <h3>{item.weight}</h3>
-                                <h3>{item.style}</h3>
-                                <h4>팔로워 {item.follower}</h4>
-                            </RankerProfileInfo>
-                        </RankerProfileImgInfo>
-                        <RankerProfileCodi>
-                            <Slider style={{marginTop:"1vh",width:"18vw",marginLeft:"0.6vw"}} {...settings}>
-                            {item.codi.map((item)=>{
-                                return (
-                                    <div>
-                                        <img src={item} alt="codi" style={{width:"80%",borderRadius:"0.4vw",objectFit:"fill",paddingLeft:"0.5vw",borderTopLeftRadius:"0.5vw"}}/>
-                                    </div>
-                                );
+        <div style={{display:"flex",width:"100%",justifyContent:"center"}}>
+        <Page2>
+                <First>
+                    <Pid>
+                    {rankUser.filter((item)=>{
+                        if(item.rank%3==1&&item.rank<=pidNum)return true;
+                        return false;
+                    }).map((item,index)=>{
+                        return(
+                        <Pids key={index}>
+                            <div className="pids">
+                            <RankingSt>{item.rank}st</RankingSt>
+                            <PidImage>
+                             <img className="pidimg" src={item.img} alt="ranking"/>
+                            </PidImage>
+                            <PidProfile>
+                                <div className="pidName">{item.name}</div>
+                                <div className="pidFollower">{item.follwer}</div>
+                                <button type="button" className="followingBtn">팔로잉</button>
+                            </PidProfile>
+                            <PidCmKg>
+                             <div>{item.cm}cm {item.kg}kg {item.style}</div>
+                            </PidCmKg>
+                            <div className="todayLine"/>
+                            <div className="pidCody">
+                            <Slider {...settings}>
+                            {item.cody.map((item,index)=>{
+                            return(
+                            <img key={index} className="rnakercodys" src={item.codyImg} alt="rankerCody"/>
+                            )
                             })}
-                           </Slider>
-                        </RankerProfileCodi>
-                    </RankerProfile>
-                    </Link>
-                </Ranker>
-                
-                </>
-                )
-                
-            }))}
-            
-        </Container>
-        <Container2>
-        <OtherRank>
-        {userinfo.filter((item)=>item.style===defalutStyle).sort(function comperator(a,b){
-                        if(a.follower>b.follower)return -1;
-                        else if(a.follower<b.follower)return 1;
-                        else return 0;
-                    }).slice(3).map(((item,index)=>{
-            return(
-                   <OtherRanking>
-                     <Rank>
-                        <Number><h4>{index+4}th</h4></Number>
-                        <RankImg>
-                            <img src={item.img} alt="codi" style={{width:"80%",height:"100%",borderRadius:"0.4vw",paddingLeft:"0.5vw"}}/>
-                        </RankImg>
-                        <RankProfile>
-                            <h3>{item.nicname}</h3>
-                            <h3>{item.height}</h3>
-                            <h3>{item.weight}</h3>
-                            <h3>{item.style}</h3>
-                            <h4>팔로워 {item.follower}</h4>
-                        </RankProfile>
-                        <RankCodi>
-                            <Slider {...settings=settings2}>
-                                {item.codi.map((item)=>{
-                                    return (    
-                                        <div> 
-                                            <img src={item} alt="codi" style={{width:"70%",borderRadius:"0.4vw",objectFit:"fill",paddingLeft:"0.5vw"}}/>
-                                        </div>
-                                    );
-                                })}
                             </Slider>
-
-                            
-                        </RankCodi>
-                     </Rank>
-                   </OtherRanking>
-                     )
-                    }))}
-        </OtherRank>
-     </Container2>
+                            </div>
+                            </div>
+                        </Pids>
+                        )
+                        })}
+                    </Pid>
+                </First>
+                <Second>
+                <Pid>
+                {rankUser.filter((item)=>{
+                        if(item.rank%3==2&&item.rank<=pidNum)return true;
+                        return false;
+                    }).map((item,index)=>{                       
+                         return(
+                        <Pids key={index}>
+                            <div className="pids">
+                            <RankingSt>{item.rank}st</RankingSt>
+                            <PidImage>
+                             <img className="pidimg" src={item.img} alt="ranking"/>
+                            </PidImage>
+                            <PidProfile>
+                                <div className="pidName">{item.name}</div>
+                                <div className="pidFollower">{item.follwer}</div>
+                                <button type="button"className="followingBtn">팔로잉</button>
+                            </PidProfile>
+                            <PidCmKg>
+                             <div>{item.cm}cm {item.kg}kg {item.style}</div>
+                            </PidCmKg>
+                            <div className="todayLine"/>
+                            <div className="pidCody">
+                            <Slider {...settings}>
+                            {item.cody.map((item,index)=>{
+                            return(
+                            <img key={index}className="rnakercodys" src={item.codyImg} alt="rankerCody"/>
+                            )
+                            })}
+                            </Slider>
+                            </div>
+                            </div>
+                        </Pids>
+                        )
+                        })}
+                    </Pid>     
+                </Second>
+                <Third>
+                <Pid>
+                {rankUser.filter((item)=>{
+                        if(item.rank%3==0&&item.rank<=pidNum)return true;
+                        return false;
+                    }).map((item,index)=>{                 
+                        return(
+                        <Pids key={index}>
+                            <div className="pids">
+                            <RankingSt>{item.rank}st</RankingSt>
+                            <PidImage>
+                             <img className="pidimg" src={item.img} alt="ranking"/>
+                            </PidImage>
+                            <PidProfile>
+                                <div className="pidName">{item.name}</div>
+                                <div className="pidFollower">{item.follwer}</div>
+                                <button type="button" className="followingBtn">팔로잉</button>
+                            </PidProfile>
+                            <PidCmKg>
+                             <div>{item.cm}cm {item.kg}kg {item.style}</div>
+                            </PidCmKg>
+                            <div className="todayLine"/>
+                            <div className="pidCody">
+                            <Slider {...settings}>
+                            {item.cody.map((item,index)=>{
+                            return(
+                            <img key={index} className="rnakercodys" src={item.codyImg} alt="rankerCody"/>
+                            )
+                            })}
+                            </Slider>
+                            </div>
+                            </div>
+                        </Pids>
+                        )
+                        })}
+                    </Pid>    
+                </Third>
+            </Page2>
+            </div>
         </>
     )
 };

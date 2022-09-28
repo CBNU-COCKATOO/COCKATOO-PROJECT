@@ -130,7 +130,7 @@ function MyPageStyleFix(){
                         <h4>키</h4>
                     </Title>
                     <Inputs>
-                        <Input onChange={onChangeHeight} placeholder={user.height}></Input>
+                        <Input onChange={onChangeHeight} placeholder={user.height}/>
                     </Inputs>
                 </Height>
                 <Weight>
@@ -138,7 +138,7 @@ function MyPageStyleFix(){
                         <h4>몸무게</h4>
                     </Title>
                     <Inputs>
-                        <Input onChange={onChangeWeight}  placeholder={user.weight}></Input>
+                        <Input onChange={onChangeWeight}  placeholder={user.weight}/>
                     </Inputs>
                 </Weight>
             </Container2>
@@ -147,8 +147,8 @@ function MyPageStyleFix(){
                     <h4>스타일</h4>
                     <Styles>
                         {style.map((item,index)=>{
-                           if(item.status)return(<h5 index={index} onClick={()=>styleClick(index)} style={{backgroundColor:"darkgray"}}>{item.name}</h5>);
-                           else return( <h5 index={index} onClick={()=>styleClick(index)}>{item.name}</h5>);
+                           if(item.status)return(<h5 key={index} onClick={()=>styleClick(index)} style={{backgroundColor:"darkgray"}}>{item.name}</h5>);
+                           return( <h5 key={index}  onClick={()=>styleClick(index)}>{item.name}</h5>);
                         })}
                     </Styles>
                 </div>

@@ -10,7 +10,8 @@ const Container = styled.div`
     overflow-y: auto;
     ::-webkit-scrollbar{
         background-color: #B0B0B0;
-        width: 2px;
+        width: 10px;
+        border-radius: 10px;
     }
     &::-webkit-scrollbar-thumb{
         background-color: #7939FF;
@@ -330,7 +331,7 @@ function SignUp(){
             <div style={{marginTop:"1vh"}}><p>스타일</p></div>
             <Styles>
             {style.map((item,index)=>{
-                if(item.status)return(<h4 index={index} onClick={()=>styleClick(index)}style={{backgroundColor:"darkgray"}}>{item.name}</h4>);
+                if(item.status)return(<h4 index={index} onClick={()=>styleClick(index)}style={{color:"white",backgroundColor:"#7939FF"}}>{item.name}</h4>);
                 return( <h4 index={index} onClick={()=>styleClick(index)}>{item.name}</h4>);
             })}
             </Styles>

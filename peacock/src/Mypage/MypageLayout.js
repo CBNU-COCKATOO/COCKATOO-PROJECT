@@ -74,7 +74,7 @@ const Detail = styled.div`
 `
 ;
 function MyPageLayout(){   
-    let navigate = useNavigate();
+    const navigate = useNavigate()
     return(
     <Container>
         <LEFT>
