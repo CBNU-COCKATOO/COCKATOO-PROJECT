@@ -11,6 +11,9 @@ const Container = styled.div`
     text-align: center;
     flex-direction: column;
     height:70vh;
+    h5{
+        font-family:'SUIT';
+    }
 `;
 const Check = styled.div`
     display: flex;
@@ -18,7 +21,16 @@ const Check = styled.div`
     margin-right: 4vw;
     h5{
         margin-right:2vw;
+        font-family:'SUIT';
        
+    };
+    input:focus{
+        outline-color:#7939FF;
+    }
+    input{
+        border:none;
+        background-color: #F4F4F4;
+        border-radius: 0.3vw;
     }
 `;
 const Checks = styled.div`
@@ -28,29 +40,48 @@ const Checks = styled.div`
         margin-right:2vw;
        
     }
+    input:focus{
+        outline-color:#7939FF;
+    }
+    input{
+        border:none;
+        background-color: #F4F4F4;
+        border-radius: 0.3vw;
+    }
 `;
 const Button = styled.button`
-    width:8vw;
+    width:6vw;
     height:4vh;
-    border-radius: 0.4vw;
+    border-radius: 0.5vw;
+    border:none;
     margin-top: 2vh;
-    background-color: powderblue;
     margin-left: 1vw;
+    color:white;
+    background-color: #7939FF;
+    font-family: 'SUIT';
+    cursor: pointer;
 `;
 const Buttons = styled.button`
-    width:8vw;
+    width:6vw;
     height:4vh;
-    border-radius: 0.4vw;
+    border-radius: 0.5vw;
+    border:none;
     margin-top: 2vh;
-    background-color: powderblue;
+    color:white;
+    background-color: #7939FF;
+    font-family: 'SUIT';
+    cursor: pointer;
 `;
 const Logo = styled.div`
     align-items: center;
     justify-content: center;
     text-align: center;
-    h1{
-        font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    div{
+        font-family:'SUIT';
         margin-left: 1.5vw;
+        font-size:1vw;
+        font-weight: 600;
+        margin-right:1.5vw;
     }
 `;
 function MyPageInfoFix(){
@@ -92,7 +123,7 @@ function MyPageInfoFix(){
         <Container>
         <h5>현재 비밀번호를 입력해주세요!</h5>
             <Checks>
-                <input onChange={onChange} style={{borderRadius:"1vh",width:"15vw",height:"5vh",textAlign:"center"}} type="password"/>
+                <input onChange={onChange} style={{borderRadius:"1vh",width:"15vw",height:"5vh",textAlign:"center"}}/>
             </Checks>
             <Buttons onClick={buttonClick}>
             확인
@@ -100,7 +131,7 @@ function MyPageInfoFix(){
         </Container>:
         <Container>
              <Logo>
-                <h1 >비밀번호 변경</h1>
+                <div>비밀번호 변경</div>
              </Logo>
              <Check>
                 <h5>새 비밀번호</h5>

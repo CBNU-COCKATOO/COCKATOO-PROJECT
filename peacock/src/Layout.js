@@ -27,8 +27,7 @@ const Head = styled.div`
     }
 `;
 const Logo = styled.div`
-    justify-content: center;
-    align-items: center;
+  margin-top:2.5vh;
     display: flex;
     cursor: pointer;
     width:18%;
@@ -47,24 +46,28 @@ margin-top:1.3vh;
   width:4%;`;
 const Search =styled.div`
   width:46%;
-  margin-top: 2vh;
+  margin-top: 1.5vh;
   margin-left:4vw;
   img{
        width:1.3vw;
         position: absolute;
-        right: 42vw;
-        top:3.1vh;
+        right: 41vw;
+        top:3.2vh;
         cursor:pointer;
+  }
+  input:focus{
+    outline-color: #7939FF;
   }
 `;
 const Input = styled.input`
   width:50%;
-  height:2vh;
+  height:3vh;
   border:none;
   border-radius: 1vw; 
-  background-color: rgb(248,248,248);
+  background-color: #F5F5F5;
   padding:0.4vw;
   padding-left: 1vw;
+  font-family: "SUIT";
   ::placeholder{
     font-family: "SUIT";
   }
@@ -114,7 +117,7 @@ function Layout(){
     <div>
         <Header>
             <Head>
-                <Logo onClick={onClickLogo}><img style={{width:"90%",height:"160%",objectFit:"fill"}} src="https://user-images.githubusercontent.com/44117975/191046781-fcaf525d-664f-49e7-a135-56c26781179b.png" alt="jjowinLogo"/></Logo>
+                <Logo onClick={onClickLogo}><img style={{width:"100%",height:"3vh",objectFit:"contain"}} src="https://user-images.githubusercontent.com/44117975/195836992-2fd18d12-97e9-414c-8e4b-ab54ca72c342.png" alt="jjowinLogo"/></Logo>
                 {state===1?
                 <MyCloset>
                   <h3 style={{fontWeight:"bold",color:"#7939FF"}} onClick={onClickMyCloset}>나의 옷장</h3>
