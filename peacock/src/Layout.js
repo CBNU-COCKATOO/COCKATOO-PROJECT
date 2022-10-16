@@ -85,6 +85,7 @@ margin-top:1.3vh;
 
 function Layout(){
   const [state,setState]=useState(0);
+  const [keyword,setKeyword]=useState("가디건 추천");
   const navigate=useNavigate();
   const loginStatus = useRecoilValue(LoginStatus);
   const setterLoginStatus=useSetRecoilState(LoginStatus);
@@ -113,6 +114,19 @@ function Layout(){
       navigate("/login");
       setState(5);
   }
+  const onChangeKeyword = (e) =>{
+    setKeyword(e.target.value);
+  }
+  const handleOnClick = () => {
+    navigate(`/search/${keyword}`);
+  };
+  
+  
+  const handleOnKeyPress = e => {
+    if (e.key === 'Enter') {
+      handleOnClick(); // Enter 입력이 되면 클릭 이벤트 실행
+    }
+  };
    return (
     <div>
         <Header>
@@ -140,8 +154,8 @@ function Layout(){
                 <h3 onClick={onClickDictionary}>도감</h3>
               </Dictionary>}
                 <Search>
-                  <Input placeholder='가디건 추천'/>
-                  <img src="https://cdn-icons-png.flaticon.com/128/2801/2801881.png" alt="searchIcon"/>
+                  <Input  onKeyPress={handleOnKeyPress} onChange={onChangeKeyword} placeholder='가디건 추천'/>
+                  <img onClick={()=>navigate(`/search/${keyword}`)} src="https://cdn-icons-png.flaticon.com/128/2801/2801881.png" alt="searchIcon"/>
                 </Search>
                 {state===4?
                 <MyPage>

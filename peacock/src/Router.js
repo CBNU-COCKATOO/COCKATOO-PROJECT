@@ -6,6 +6,7 @@ import Layout from "./Layout";
 import Dictionary from "./routes/Dictionary";
 import LogIn from "./routes/LogIn";
 import SignUp from "./routes/SingUp";
+import Search from "./routes/Search";
 import MyPageLayout from "./Mypage/MypageLayout";
 import MyPageCloset from "./Mypage/MyPageCloset";
 import MyPageFollower from "./Mypage/MypageFollower";
@@ -24,6 +25,7 @@ function Router(){
             <Route path="/closet/:username/closetAdd/:where" element={<ClosetAdd/>}></Route>
             <Route path="/ranking" element={<Ranking/>}></Route>
             <Route path="/dictionary" element={<Dictionary/>}></Route>
+            <Route path="/search/:keyword" element={<Search/>}></Route>
             <Route  element={<MyPageLayout/>}>
                 <Route path="/myPage/myPageInfoFix" element={<MyPageInfoFix/>}></Route>
                 <Route path="/myPage/myPageCloset" element={<MyPageCloset/>}></Route>

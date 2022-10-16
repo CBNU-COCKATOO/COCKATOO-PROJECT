@@ -144,6 +144,14 @@ function LogIn(){
     const onChangePw = (e) =>{
         setPw(e.target.value);
     }
+    const handleOnClick = () => {
+        onClickLoginHandler();
+      };
+      const handleOnKeyPress = (e) => {
+        if (e.key === 'Enter') {
+          handleOnClick(); // Enter 입력이 되면 클릭 이벤트 실행
+        }
+      };
     return(
             <Container>
                 <div style={{display:"flex",width:"40%"}}>
@@ -154,7 +162,7 @@ function LogIn(){
                     </Container1>
                     <Container2>
                         <ID><Input onChange={onChangeId} placeholder="이메일"></Input></ID>
-                        <PW><Input type="password"onChange={onChangePw}placeholder="비밀번호"></Input></PW>
+                        <PW><Input onKeyPress={handleOnKeyPress}  type="password"onChange={onChangePw}placeholder="비밀번호"></Input></PW>
                         <Login><Button className="login"onClick={onClickLoginHandler}>로그인</Button></Login>
                         <Login><Button className="register" onClick={()=>{navigate("/signUp")}}>회원가입</Button></Login>
                         <Find style={{display:"flex"}}>
