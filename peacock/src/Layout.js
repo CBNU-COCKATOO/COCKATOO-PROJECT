@@ -120,9 +120,7 @@ function Layout(){
   const handleOnClick = () => {
     navigate(`/search/${keyword}`);
   };
-  
-  
-  const handleOnKeyPress = e => {
+  const handleOnKeyPress = (e) => {
     if (e.key === 'Enter') {
       handleOnClick(); // Enter 입력이 되면 클릭 이벤트 실행
     }

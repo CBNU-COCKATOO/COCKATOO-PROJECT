@@ -9,6 +9,7 @@ import ReactQuill from 'react-quill';
 import '../quill.snow.css';
 import '../index.css'
 import { ICON_TEMPLATES } from 'froala-editor';
+import AddCloth from'./AddCloth.js'
 
 const Container = styled.div`
     display: flex;
@@ -16,6 +17,7 @@ const Container = styled.div`
     margin-left: 20vw;
     margin-top:5vh;
     .addbutton{
+        cursor: pointer;
         position: fixed;
         right:15vw;
         bottom:3vh;
@@ -126,7 +128,6 @@ const ModalDetails = styled.div`
     border-left: 1px solid black;
     padding:1vh;
     width:70%;
-    text-align: center;
     display:inline;
 `;
 const Input = styled.input`
@@ -135,8 +136,9 @@ const Input = styled.input`
     text-align: center;
     width:80%;
 `;
+
   function Closet(){
-    const user ={
+    const user = {
         name:'권낙현',
         nickname:'김서기',
         kg:'67kg',
@@ -200,7 +202,15 @@ const Input = styled.input`
     }
     //현재 선택된 옷 카테고리
     const [standard,setStandard] = useState(user.cody);
-    const [cody,setCody] = useState(1);
+    const [cody,setCody] = useState(0);
+    const [addCloth, setAddCloth] = useState(false);
+
+    //모달창 노출
+    const showModal = () => {
+        console.log(addCloth)
+        setAddCloth(true);
+    };
+    
     //quill에 사용되는 설정
     const modules = {
         toolbar: {
@@ -218,6 +228,7 @@ const Input = styled.input`
     const [clicked,setClicked] = useState({});
     const [read,setRead]=useState("");
     const [add,setAdd] = useState(0);
+
     const openModal = (item) => {
       setModalOpen(1);
       setClicked(item);
@@ -234,81 +245,83 @@ const Input = styled.input`
       }
     const navigate = useNavigate();
     return(
-        <Container>
-            <Container1>
-                <ProfileImg>
-                    <img src="https://user-images.githubusercontent.com/44117975/183907930-7f851b6c-ff86-4638-81fc-e2fb6996d5eb.png" alt="profileImage"/>
-                </ProfileImg>
-                <ProfileInfo>
-                    <div className="rankName">김서기</div>
-                    <div className="rankFollower">9,099명이 팔로잉</div>
-                    <button type="button" className="followingBtn">팔로잉</button>
-                </ProfileInfo>
-                <ProfileCmkg>
-                    <div>172cm 63kg 스트릿</div>
-                </ProfileCmkg>
-                    <div className="todayLine"/>
-                <Standard>
-                    <div onClick={()=>{setStandard(user.cody); setCody(1)}}><img src=' https://user-images.githubusercontent.com/44117975/194839189-ac6e7dbb-a00f-41b5-9b79-489dbe520a21.png' alt="cody"/></div>
-                    <div onClick={()=>{setStandard(user.outer); setCody(0)}}><img src='https://user-images.githubusercontent.com/44117975/194839751-8eac44d7-968f-4207-85cc-1360fe3229c0.png' alt="outer"/></div>
-                    <div onClick={()=>{setStandard(user.top); setCody(0)}}><img src='https://user-images.githubusercontent.com/44117975/194835083-0c13e236-4114-44b4-9c16-12b395099045.png' alt="top"/></div>
-                    <div onClick={()=>{setStandard(user.pants); setCody(0)}}><img src='https://user-images.githubusercontent.com/44117975/194836944-6324201b-463f-4682-8381-5f3b12273686.png' alt="pants"/></div>
-                    <div onClick={()=>{setStandard(user.shoes); setCody(0)}}><img src='https://user-images.githubusercontent.com/44117975/194837020-59178a0a-fb78-47e4-8d33-3f349e79d165.png' alt="shoes"/></div>
-                </Standard>
-            </Container1>
-            <Container2>
-            <Modal open={modalOpen} close={closeModal} fix={fixModal} header="상세보기">
-                                <div style={{display:"flex"}}>
-                                    <div style={{width:"45%"}}>
-                                        <img style={{maxHeight:"45vh",maxWidth:"15vw",minHeight:"45vh",minWidth:"15vw"}} src={clicked.url} alt="clickImage"/>
-                                    </div>
-                                    <div style={{width:"50%"}}>
-                                        <ModalDetail style={{borderTop:"1px solid black"}}><text>사진명</text>{modalOpen===1?<ModalDetails>{clicked.name}</ModalDetails>:<Input placeholder={clicked.name}/>}</ModalDetail>
-                                        <ModalDetail><text>판매처</text>{modalOpen===1?<ModalDetails>{clicked.mall}</ModalDetails>:<Input placeholder={clicked.mall}/>}</ModalDetail>
-                                        <ModalDetail><text>사이즈</text>{modalOpen===1?<ModalDetails>{clicked.size}</ModalDetails>:<Input placeholder={clicked.size}/>}</ModalDetail>
-                                        <ModalDetail><text>스타일</text>{modalOpen===1?<ModalDetails>{clicked.style}</ModalDetails>:<Input placeholder={clicked.style}/>}</ModalDetail>
-                                        
-                                        <div style={{display:"flex",justifyContent:"center",alignItems:"center",flexDirection:"column",marginTop:"2vh"}}>
-                                            <div style={{height:"3vh",border:"1px solid black",width:"100%",textAlign:"center",fontWeight:"bold",paddingTop:"0.5vh"}}>
-                                                간단한 소개
-                                            </div>
-                                            <div style={{height:"22vh",border:"1px solid black",borderTop:"0",width:"100%",textAlign:"center",overflow:"scroll"}}>
-                                            {modalOpen===1?
-                                            <div dangerouslySetInnerHTML={{__html:read}}/>
-                                            :
-                                            <div className="text-editor">
-                                                <ReactQuill theme="snow"
-                                                            modules={modules}
-                                                            onChange={onChangeMyEdit}>
-                                                </ReactQuill>
-                                            </div>
-                                             }
-                                            </div>
-                                        </div>
-                                    </div>
-                                   
-            </div>
-            </Modal>
-                {cody===1? 
-                standard.map((item,index)=>{
-                    return(
-                        <Pid>
-                           <img style={{maxHeight:"40vh",minHeight:"40vh",objectFit:"fill"}} onClick={()=>navigate('/')}  src={item.url} alt="img"/>
-                        </Pid>
-                      
-                    )
-                }):
-                standard.map((item)=>{
-                    return(
-                        <Pid>
-                            <img style={{maxHeight:"28vh"}} onClick={()=>openModal(item)}  src={item.url} alt="img"/>
-                        </Pid>
-                      
-                    )
-                })
-            }
-            </Container2>
-            <img src = "https://user-images.githubusercontent.com/44117975/194871518-babeacb7-597c-47ea-8f6f-31ed09974047.png" alt="add" className='addbutton'/>
+            <Container>
+                <Container1>
+                    <ProfileImg>
+                        <img src="https://user-images.githubusercontent.com/44117975/195272814-9bf4c5c3-3a1e-40ad-bf8c-f304eb304981.png" alt="profileImage"/>
+                    </ProfileImg>
+                    <ProfileInfo>
+                        <div className="rankName">김서기</div>
+                        <div className="rankFollower">9,099명이 팔로잉</div>
+                        <button type="button" className="followingBtn">팔로잉</button>
+                    </ProfileInfo>
+                    <ProfileCmkg>
+                        <div>172cm 63kg 스트릿</div>
+                    </ProfileCmkg>
+                        <div className="todayLine"/>
+                    <Standard>
+                        <div onClick={()=>{setStandard(user.cody); setCody(0)}}><img src=' https://user-images.githubusercontent.com/44117975/194839189-ac6e7dbb-a00f-41b5-9b79-489dbe520a21.png' alt="cody"/></div>
+                        <div onClick={()=>{setStandard(user.outer); setCody(1)}}><img src='https://user-images.githubusercontent.com/44117975/194839751-8eac44d7-968f-4207-85cc-1360fe3229c0.png' alt="outer"/></div>
+                        <div onClick={()=>{setStandard(user.top); setCody(2)}}><img src='https://user-images.githubusercontent.com/44117975/194835083-0c13e236-4114-44b4-9c16-12b395099045.png' alt="top"/></div>
+                        <div onClick={()=>{setStandard(user.pants); setCody(3)}}><img src='https://user-images.githubusercontent.com/44117975/194836944-6324201b-463f-4682-8381-5f3b12273686.png' alt="pants"/></div>
+                        <div onClick={()=>{setStandard(user.shoes); setCody(4)}}><img src='https://user-images.githubusercontent.com/44117975/194837020-59178a0a-fb78-47e4-8d33-3f349e79d165.png' alt="shoes"/></div>
+                    </Standard>
+                </Container1>
+                <Container2>
+                <Modal open={modalOpen} close={closeModal} fix={fixModal} header="상세보기">
+                    <div style={{display:"flex"}}>
+                        <div style={{width:"45%"}}>
+                            <img style={{maxHeight:"45vh",maxWidth:"15vw",minHeight:"45vh",minWidth:"15vw"}} src={clicked.url} alt="clickImage"/>
+                        </div>
+                        <div style={{width:"50%"}}>
+                            <ModalDetail style={{borderTop:"1px solid black"}}><text>사진명</text>{modalOpen===1?<ModalDetails>{clicked.name}</ModalDetails>:<Input placeholder={clicked.name}/>}</ModalDetail>
+                            <ModalDetail><text>판매처</text>{modalOpen===1?<ModalDetails>{clicked.mall}</ModalDetails>:<Input placeholder={clicked.mall}/>}</ModalDetail>
+                            <ModalDetail><text>사이즈</text>{modalOpen===1?<ModalDetails>{clicked.size}</ModalDetails>:<Input placeholder={clicked.size}/>}</ModalDetail>
+                            <ModalDetail><text>스타일</text>{modalOpen===1?<ModalDetails>{clicked.style}</ModalDetails>:<Input placeholder={clicked.style}/>}</ModalDetail>
+                            
+                            <div style={{display:"flex",justifyContent:"center",alignItems:"center",flexDirection:"column",marginTop:"2vh"}}>
+                                <div style={{height:"3vh",border:"1px solid black",width:"100%",textAlign:"center",fontWeight:"bold",paddingTop:"0.5vh"}}>
+                                    간단한 소개
+                                </div>
+                                <div style={{height:"22vh",border:"1px solid black",borderTop:"0",width:"100%",textAlign:"center",overflow:"scroll"}}>
+                                {modalOpen===1?
+                                <div dangerouslySetInnerHTML={{__html:read}}/>
+                                :
+                                <div className="text-editor">
+                                    <ReactQuill theme="snow"
+                                                modules={modules}
+                                                onChange={onChangeMyEdit}>
+                                    </ReactQuill>
+                                </div>
+                                }
+                                </div>
+                            </div>
+                        </div>
+                                    
+                </div>
+                </Modal>
+                    {cody===0? 
+                    standard.map((item,index)=>{
+                        return(
+                            <Pid>
+                            <img style={{maxHeight:"20vw",minHeight:"20vW",objectFit:"fill"}} onClick={()=>navigate('/')}  src={item.url} alt="img"/>
+                            </Pid>
+                        
+                        )
+                    }):
+                    standard.map((item)=>{
+                        return(
+                            <Pid>
+                                <img style={{maxHeight:"14vW"}} onClick={()=>openModal(item)}  src={item.url} alt="img"/>
+                            </Pid>
+                        
+                        )
+                    })
+                }
+                </Container2>
+                <img  onClick={showModal} src = "https://user-images.githubusercontent.com/44117975/194871518-babeacb7-597c-47ea-8f6f-31ed09974047.png" alt="add" className='addbutton'/>
+                {addCloth && <AddCloth setAddCloth = {setAddCloth} cody = {cody}/>}
+                
         </Container>
     )
 }
