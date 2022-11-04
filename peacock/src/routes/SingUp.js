@@ -1,6 +1,7 @@
 import {Link} from "react-router-dom"
 import styled from "styled-components";
 import { useEffect, useState } from "react";
+import { useMutation } from "react-query";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { TotalId, TotalPw } from "../atoms";
 import "../index.css"
@@ -181,6 +182,7 @@ const Page = styled.div`
     align-items: center;
     margin-top:12vh;
 `;
+ 
 function SignUp(){
     const [agree,setAgree]=useState([0,0,0]); //동의
     const [id,setId]=useState(0); //아이디
@@ -246,14 +248,51 @@ function SignUp(){
             setAgree([...agree,1])
         }
     }
+
+    const postdata = async (data) => {
+        fetch("url", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((data) => console.log(data));
+      }
+  
+  const { mutate, isLoading } = useMutation(postdata, {
+      onSuccess: data => {
+        console.log(data);
+        const message = "success"
+        alert(message)
+      },
+      onError: () => {
+        alert("there was an error")
+      },
+    });
+
     //회원가입 버튼 클릭 함수
     const ButtonClick=()=>{
         //최소 8자에 하나의 문자 및 하나의 숫자 및 하나의 특수 문자 포함된 비밀번호인지 체크
         if(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/g.test(pw)&&/[a-zA-Z]{6,}/g.test(id)){
             const new_style=style.filter((item)=>item.status==1);
-            console.log(id,pw,cm,kg,name,email,new_style,agree);
         }
-        }
+        mutate(
+            {
+                "id":"abcd1234",
+                "password":"qwer1234",
+                "username":"낙현",
+                "image":"URL",
+                "email":"knh6269@gmail.com",
+                "age":"",
+                "phonenumber":"01000003333",
+                "height":177,
+                "weight":67
+             }
+        );
+    }
+
       
        
     //아이디 변경 함수
@@ -478,7 +517,7 @@ function SignUp(){
                     <label>동의합니다</label>
                 </Contianer2>
                 <Contianer2>
-                    <button className="register" type="button" style={{width:"70%",height:"5vh",borderRadius:"9px",marginLeft:"1.5vw",border:"none",marginTop:"2vh",marginBottom:"1vh",fontFamily:"Pretendard"}}onClick={ButtonClick}>회원가입</button>
+                    <button className="register" type="button" style={{width:"70%",height:"5vh",borderRadius:"9px",marginLeft:"1.5vw",border:"none",marginTop:"2vh",marginBottom:"1vh",fontFamily:"Pretendard"}} onClick={ButtonClick}>회원가입</button>
                 </Contianer2>
             </Container>
         </div>

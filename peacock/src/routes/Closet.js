@@ -1,15 +1,12 @@
-import { useParams,Link,useNavigate } from 'react-router-dom';
-import React, { useRef,useCallback,useState } from 'react';
+import {Link,useNavigate } from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
 import styled from "styled-components";
-import Slider from "react-slick";
 import "../slick.css";
 import "../slick-theme.css";
-import Modal from "../modal"
-import ReactQuill from 'react-quill';
 import '../quill.snow.css';
 import '../index.css'
-import { ICON_TEMPLATES } from 'froala-editor';
 import AddCloth from'./AddCloth.js'
+import ShowDetailCloth from './ShowDetailCloth';
 
 const Container = styled.div`
     display: flex;
@@ -108,33 +105,12 @@ const Standard = styled.div`
         height:2.5vw;
         background-color: #333333;
         border-radius: 50%;
-    img{
-        width:50%;
-        padding-left:0.6vw;
-        padding-top:0.6vw;
+        img{
+            width:50%;
+            padding-left:0.6vw;
+            padding-top:0.6vw;
+        }
     }
-    }
-`;
-const ModalDetail = styled.div`
-    display: flex;
-    border: 1px solid black;
-    border-top:0;
-    text{
-        padding:0.5vw;
-        font-weight: bold;
-    }
-`;
-const ModalDetails = styled.div`
-    border-left: 1px solid black;
-    padding:1vh;
-    width:70%;
-    display:inline;
-`;
-const Input = styled.input`
-    border:0;
-    border-left:1px solid black;
-    text-align: center;
-    width:80%;
 `;
 
   function Closet(){
@@ -160,90 +136,62 @@ const Input = styled.input`
             {url:"https://image.msscdn.net/mfile_s01/_shopstaff/list.staff_62d762e15fb95.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
         ],
         top:[
-            {url:"https://image.msscdn.net/images/goods_img/20200910/1595528/1595528_4_220.jpg"},
-            {url:"https://image.msscdn.net/images/goods_img/20210821/2077010/2077010_1_220.jpg"},
-            {url:"https://image.msscdn.net/images/goods_img/20220315/2419493/2419493_1_220.jpg"},
-            {url:"https://image.msscdn.net/images/goods_img/20220204/2340647/2340647_1_220.jpg"},
-            {url:"https://image.msscdn.net/images/goods_img/20220525/2582457/2582457_1_220.jpg"},
-            {url:"https://image.msscdn.net/images/goods_img/20220525/2582457/2582457_1_220.jpg"},
-            {url:"https://image.msscdn.net/images/goods_img/20220525/2582457/2582457_1_220.jpg"},
-            {url:"https://image.msscdn.net/images/goods_img/20220525/2582457/2582457_1_220.jpg"}
+            {url:"https://image.msscdn.net/images/goods_img/20200910/1595528/1595528_4_220.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+            {url:"https://image.msscdn.net/images/goods_img/20210821/2077010/2077010_1_220.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+            {url:"https://image.msscdn.net/images/goods_img/20220315/2419493/2419493_1_220.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+            {url:"https://image.msscdn.net/images/goods_img/20220204/2340647/2340647_1_220.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+            {url:"https://image.msscdn.net/images/goods_img/20220525/2582457/2582457_1_220.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+            {url:"https://image.msscdn.net/images/goods_img/20220525/2582457/2582457_1_220.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+            {url:"https://image.msscdn.net/images/goods_img/20220525/2582457/2582457_1_220.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+            {url:"https://image.msscdn.net/images/goods_img/20220525/2582457/2582457_1_220.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
         ],
         pants:[
-            {url:"https://image.msscdn.net/images/goods_img/20210428/1924271/1924271_9_220.jpg"},
-            {url:"https://image.msscdn.net/images/goods_img/20200217/1308010/1308010_1_220.jpg"},
-            {url:"https://image.msscdn.net/images/goods_img/20210510/1943583/1943583_1_220.jpg"},
-            {url:"https://image.msscdn.net/images/goods_img/20220411/2479826/2479826_2_220.jpg"},
-            {url:"https://image.msscdn.net/images/goods_img/20220401/2461249/2461249_21_220.jpg"},
-            {url:"https://image.msscdn.net/images/goods_img/20220401/2461249/2461249_21_220.jpg"},
-            {url:"https://image.msscdn.net/images/goods_img/20220401/2461249/2461249_21_220.jpg"},
-            {url:"https://image.msscdn.net/images/goods_img/20220401/2461249/2461249_21_220.jpg"}
-        ],    
+            {url:"https://image.msscdn.net/images/goods_img/20210428/1924271/1924271_9_220.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+            {url:"https://image.msscdn.net/images/goods_img/20200217/1308010/1308010_1_220.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+            {url:"https://image.msscdn.net/images/goods_img/20210510/1943583/1943583_1_220.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+            {url:"https://image.msscdn.net/images/goods_img/20220411/2479826/2479826_2_220.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+            {url:"https://image.msscdn.net/images/goods_img/20220401/2461249/2461249_21_220.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+            {url:"https://image.msscdn.net/images/goods_img/20220401/2461249/2461249_21_220.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+            {url:"https://image.msscdn.net/images/goods_img/20220401/2461249/2461249_21_220.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+            {url:"https://image.msscdn.net/images/goods_img/20220401/2461249/2461249_21_220.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},        ],    
         shoes:[
-            {url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvSHSjNI5OMHvKtOZe6_X3Um3u5sK2dIuFxA&usqp=CAU"},
-            {url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5RHnWgJvDsYlRn1vpCvGVRbifSmxhAukFfw&usqp=CAU"},
-            {url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSS71bo94dg4oeGl4KWrqXLIAeZUfh-0TG1Qg&usqp=CAU"},
-            {url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5DiKtryivpcFoF21DcscoTWTb9bn71eEEFA&usqp=CAU"},
-            {url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYzk6Zeu0ogha_V6RxX7_GuaUGtqFt2fibjA&usqp=CAU"},
-            {url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYzk6Zeu0ogha_V6RxX7_GuaUGtqFt2fibjA&usqp=CAU"},
-            {url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYzk6Zeu0ogha_V6RxX7_GuaUGtqFt2fibjA&usqp=CAU"},
-            {url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYzk6Zeu0ogha_V6RxX7_GuaUGtqFt2fibjA&usqp=CAU"}
-        ],
+            {url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvSHSjNI5OMHvKtOZe6_X3Um3u5sK2dIuFxA&usqp=CAU",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+            {url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5RHnWgJvDsYlRn1vpCvGVRbifSmxhAukFfw&usqp=CAU",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+            {url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSS71bo94dg4oeGl4KWrqXLIAeZUfh-0TG1Qg&usqp=CAU",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+            {url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5DiKtryivpcFoF21DcscoTWTb9bn71eEEFA&usqp=CAU",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+            {url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYzk6Zeu0ogha_V6RxX7_GuaUGtqFt2fibjA&usqp=CAU",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+            {url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYzk6Zeu0ogha_V6RxX7_GuaUGtqFt2fibjA&usqp=CAU",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+            {url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYzk6Zeu0ogha_V6RxX7_GuaUGtqFt2fibjA&usqp=CAU",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+            {url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYzk6Zeu0ogha_V6RxX7_GuaUGtqFt2fibjA&usqp=CAU",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},        ],
         outer:[
-             {url:"https://image.msscdn.net/images/goods_img/20220210/2351272/2351272_1_220.jpg"},
-             {url:"https://image.msscdn.net/images/goods_img/20220307/2402186/2402186_1_220.jpg"},
-             {url:"https://image.msscdn.net/images/goods_img/20220607/2601275/2601275_2_220.jpg"},
-             {url:"https://image.msscdn.net/images/goods_img/20220308/2404216/2404216_1_220.jpg"},
-             {url:"https://image.msscdn.net/images/goods_img/20220325/2446023/2446023_1_220.jpg"},
-             {url:"https://image.msscdn.net/images/goods_img/20220325/2446023/2446023_1_220.jpg"},
-             {url:"https://image.msscdn.net/images/goods_img/20220325/2446023/2446023_1_220.jpg"},
-             {url:"https://image.msscdn.net/images/goods_img/20220325/2446023/2446023_1_220.jpg"}
-        ],
+             {url:"https://image.msscdn.net/images/goods_img/20220210/2351272/2351272_1_220.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+             {url:"https://image.msscdn.net/images/goods_img/20220307/2402186/2402186_1_220.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+             {url:"https://image.msscdn.net/images/goods_img/20220607/2601275/2601275_2_220.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+             {url:"https://image.msscdn.net/images/goods_img/20220308/2404216/2404216_1_220.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+             {url:"https://image.msscdn.net/images/goods_img/20220325/2446023/2446023_1_220.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+             {url:"https://image.msscdn.net/images/goods_img/20220325/2446023/2446023_1_220.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+             {url:"https://image.msscdn.net/images/goods_img/20220325/2446023/2446023_1_220.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},
+             {url:"https://image.msscdn.net/images/goods_img/20220325/2446023/2446023_1_220.jpg",name:"평범한 하루",style:"캐주얼",size:"M",mall:"무신사",review:"꾸안꾸 룩으로 제격인것 같습니다 ㅎㅎ"},        ],
     }
+
     //현재 선택된 옷 카테고리
     const [standard,setStandard] = useState(user.cody);
     const [cody,setCody] = useState(0);
     const [addCloth, setAddCloth] = useState(false);
+    const [showDetail, setShowDetail] = useState(false);
+    const [clicked,setClicked] = useState({});
 
-    //모달창 노출
+    //옷 추가 모달창 노출
     const showModal = () => {
-        console.log(addCloth)
         setAddCloth(true);
     };
     
-    //quill에 사용되는 설정
-    const modules = {
-        toolbar: {
-            container: [
-              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-              [{ 'align': [] }],
-              ['bold', 'italic', 'underline', 'blockquote'],
-              [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-              [{ 'color': ['#000000', '#e60000', '#ff9900', '#ffff00', '#008a00', '#0066cc', '#9933ff', '#ffffff', '#facccc', '#ffebcc', '#ffffcc', '#cce8cc', '#cce0f5', '#ebd6ff', '#bbbbbb', '#f06666', '#ffc266', '#ffff66', '#66b966', '#66a3e0', '#c285ff', '#888888', '#a10000', '#b26b00', '#b2b200', '#006100', '#0047b2', '#6b24b2', '#444444', '#5c0000', '#663d00', '#666600', '#003700', '#002966', '#3d1466', 'custom-color'] }, { 'background': [] }],
-            ],
-        }
-    };
-    //모달에 관한 상태들과 함수 
-    const [modalOpen, setModalOpen] = useState(false);
-    const [clicked,setClicked] = useState({});
-    const [read,setRead]=useState("");
-    const [add,setAdd] = useState(0);
-
-    const openModal = (item) => {
-      setModalOpen(1);
-      setClicked(item);
-    };
-    const closeModal = () => {
-      setModalOpen(0);
-    };
-    const fixModal = () =>{
-      setModalOpen(2);
+    //옷 정보 자세히 보기 모달창 노출
+    const showDetailModal = (item) =>{
+        setShowDetail(true);
+        setClicked(item);
     }
-    function onChangeMyEdit(value) {
-        value=encodeURI(value);
-        setRead(decodeURI(value));
-      }
-    const navigate = useNavigate();
+
     return(
             <Container>
                 <Container1>
@@ -268,61 +216,28 @@ const Input = styled.input`
                     </Standard>
                 </Container1>
                 <Container2>
-                <Modal open={modalOpen} close={closeModal} fix={fixModal} header="상세보기">
-                    <div style={{display:"flex"}}>
-                        <div style={{width:"45%"}}>
-                            <img style={{maxHeight:"45vh",maxWidth:"15vw",minHeight:"45vh",minWidth:"15vw"}} src={clicked.url} alt="clickImage"/>
-                        </div>
-                        <div style={{width:"50%"}}>
-                            <ModalDetail style={{borderTop:"1px solid black"}}><text>사진명</text>{modalOpen===1?<ModalDetails>{clicked.name}</ModalDetails>:<Input placeholder={clicked.name}/>}</ModalDetail>
-                            <ModalDetail><text>판매처</text>{modalOpen===1?<ModalDetails>{clicked.mall}</ModalDetails>:<Input placeholder={clicked.mall}/>}</ModalDetail>
-                            <ModalDetail><text>사이즈</text>{modalOpen===1?<ModalDetails>{clicked.size}</ModalDetails>:<Input placeholder={clicked.size}/>}</ModalDetail>
-                            <ModalDetail><text>스타일</text>{modalOpen===1?<ModalDetails>{clicked.style}</ModalDetails>:<Input placeholder={clicked.style}/>}</ModalDetail>
-                            
-                            <div style={{display:"flex",justifyContent:"center",alignItems:"center",flexDirection:"column",marginTop:"2vh"}}>
-                                <div style={{height:"3vh",border:"1px solid black",width:"100%",textAlign:"center",fontWeight:"bold",paddingTop:"0.5vh"}}>
-                                    간단한 소개
-                                </div>
-                                <div style={{height:"22vh",border:"1px solid black",borderTop:"0",width:"100%",textAlign:"center",overflow:"scroll"}}>
-                                {modalOpen===1?
-                                <div dangerouslySetInnerHTML={{__html:read}}/>
-                                :
-                                <div className="text-editor">
-                                    <ReactQuill theme="snow"
-                                                modules={modules}
-                                                onChange={onChangeMyEdit}>
-                                    </ReactQuill>
-                                </div>
-                                }
-                                </div>
-                            </div>
-                        </div>
-                                    
-                </div>
-                </Modal>
-                    {cody===0? 
+                     {cody===0? 
                     standard.map((item,index)=>{
                         return(
                             <Pid>
-                            <img style={{maxHeight:"20vw",minHeight:"20vW",objectFit:"fill"}} onClick={()=>navigate('/')}  src={item.url} alt="img"/>
+                            <img style={{maxHeight:"20vw",minHeight:"20vW",objectFit:"fill"}} onClick={()=>showDetailModal(item)}  src={item.url} alt="img"/>
                             </Pid>
                         
                         )
                     }):
-                    standard.map((item)=>{
+                    standard.map((item, index)=>{
                         return(
                             <Pid>
-                                <img style={{maxHeight:"14vW"}} onClick={()=>openModal(item)}  src={item.url} alt="img"/>
+                                <img style={{maxHeight:"14vW"}} onClick={()=>showDetailModal(item)}  src={item.url} alt="img"/>
                             </Pid>
-                        
                         )
                     })
                 }
                 </Container2>
                 <img  onClick={showModal} src = "https://user-images.githubusercontent.com/44117975/194871518-babeacb7-597c-47ea-8f6f-31ed09974047.png" alt="add" className='addbutton'/>
                 {addCloth && <AddCloth setAddCloth = {setAddCloth} cody = {cody}/>}
-                
+                {showDetail && <ShowDetailCloth setShowDetail={setShowDetail} cody = {cody} user ={clicked}/>}
         </Container>
-    )
+        )
 }
 export default Closet;

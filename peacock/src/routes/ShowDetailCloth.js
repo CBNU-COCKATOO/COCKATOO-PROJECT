@@ -13,8 +13,7 @@ const Container = styled.div`
         to {
             opacity: 1;
         }
-}
-       
+    }
  // 모달창 크기
   width: 46vw;
   height: 68vh;
@@ -25,7 +24,7 @@ const Container = styled.div`
   // 중앙 배치 */
   // top, bottom, left, right 는 브라우저 기준으로 작동한다. 
   // translate는 본인의 크기 기준으로 작동한다. 
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -125,9 +124,100 @@ const InformationDetail = styled.div`
             color:${props => props.color}
         }
     }
+    .codyName,.codyStyle{
+        display: inline-block;
+        width: 19.5vw;
+        text-align: center;
+        background-color: #F4F4F4;
+        padding: 1.5vh 0 1.5vh 0;
+        border-radius: 0.7vw;
+
+    }
+    .codyReview{
+        padding-top:1vh;
+        margin-top:1.5vh;
+        text-align: center;
+        width:19vw;
+        height:33vh;
+        overflow-y: scroll;
+        background-color: #F4F4F4;
+        border-radius: 0.6vw;
+    }
 `; 
+const InformationDetails = styled.div`
+    width:60%;
+    p{
+        margin-right:1vw;
+    }
+    input{
+        text-align: center;
+        font-family: 'SUIT';
+        background: #F4F4F4;
+        width:18vw;
+        border: none;
+        border-radius: 3vw;
+        padding:1vw;
+        &:focus{
+            outline-color: #7939FF;
+        }
+    }
+    div{
+        margin-bottom:1vh;
+    }
+    .textEditor{
+        width:79%;
+        height:22vh;
+        display: inline-block;
+    }
+    .clothSize{
+        display: inline-flex;
+        gap:1vw;
+        margin-left:0.2vw;
+        span{
+            text-align: center;
+            width:3vw;
+            padding:0.5vw 0 0.5vw 0;
+            border-radius: 1vw;
+            cursor: pointer;
+            background-color: #F4F4F4;
+        }
+    }
+    .style{
+        display: inline-flex;
+        gap:1vw;
+        margin-left:0.2vw;
+        span{
+            text-align: center;
+            width:2.8vw;
+            padding:0.5vw 0.1vw 0.5vw 0.1vw;
+            border-radius: 0.8vw;
+            cursor: pointer;
+            background-color: ${props => props.backgroundColor};
+            color:${props => props.color}
+        }
+    }
+    .codyName,.codyStyle{
+        display: inline-block;
+        width: 19.5vw;
+        text-align: center;
+        background-color: #F4F4F4;
+        padding: 1.5vh 0 1.5vh 0;
+        border-radius: 0.7vw;
+
+    }
+    .codyReview{
+        padding-top:1vh;
+        margin-top:1.5vh;
+        text-align: center;
+        width:19vw;
+        height:18vh;
+        overflow-y: scroll;
+        background-color: #F4F4F4;
+        border-radius: 0.6vw;
+    }
+`;
 const Submit = styled.div`
-    margin-top:4vh;
+    margin-top:3.5vh;
     text-align: right;
 `;
 const Button = styled.div`
@@ -139,7 +229,7 @@ const Button = styled.div`
     margin-right:1vw;
     cursor: pointer;
 `;
-function AddCloth({setAddCloth, cody}){
+function ShowDetailCloth({setShowDetail, cody, user}){
     const [codyName, setCodyName] = useState("");
     const [codyStyle, setCodyStyle] = useState([
         {name:"캐주얼",status:0},
@@ -153,8 +243,9 @@ function AddCloth({setAddCloth, cody}){
     const [size, setSize] = useState(["XS","S","M","L","XL"]);
     const [sizeStatus , setSizeStauts] = useState(0);
     const [imageUrl, setImageUrl] = useState(null);
-
+    const [repair, setRepair] = useState(0);
     const imgRef = useRef();
+    
     const onChangeImage = () => {
         const reader = new FileReader();
         const file = imgRef.current.files[0];
@@ -171,7 +262,7 @@ function AddCloth({setAddCloth, cody}){
     };
     //모달창 끄기 함수
     const closeAddCloth = () => {
-        setAddCloth(false);
+        setShowDetail(false);
     };
     const standard = ["코디", "아우터", "상의", "하의", "신발"];
      //quill에 사용되는 설정
@@ -207,16 +298,19 @@ function AddCloth({setAddCloth, cody}){
     const submit = () =>{
         console.log(codyName, codyStyle.filter((item)=>item.status===1),read,color)
     }   
-    
+    const onClickRepairButton = () => {
+        setRepair(1);
+    }
     
 
     return(
         <>
         <Background onClick={closeAddCloth}/>
          <Container>
+            {repair?
             <Container2>
                 <> 
-                    <Title>{standard[cody]} 추가하기</Title>
+                    <Title>{standard[cody]} 수정</Title>
                     {cody===0 ?
                     <Infromation>
                         <input
@@ -226,21 +320,21 @@ function AddCloth({setAddCloth, cody}){
                         style={{ display: "none" }}
                         />
                         <Image>
-                            <img onClick={onClickFileBtn}  src={imageUrl ? imageUrl : "https://user-images.githubusercontent.com/44117975/198823926-d1a8fed0-a178-422b-99f7-de4f6548cb07.png"} alt="addImg"/>
+                            <img onClick={onClickFileBtn}  src={imageUrl ? imageUrl :user.url} alt="addImg"/>
                         </Image>
                         <InformationDetail>
-                            <div>
+                            <div style={{display:"flex"}}>
                                 <p style={{display:"inline-block"}}>코디명</p>
                                 <input onChange={onChangeCodyName}/>
                             </div>
                             <div>
-                                 <p style={{display:"inline-block"}}>스타일</p>
-                                 <div className='style'>
-                                    {codyStyle.map((item, index) => {
-                                        if(item.status)return(<span style={{backgroundColor:"#7939FF",color:"white"}} onClick={()=>onClickCodyStyle(index)}>{item.name}</span>)
-                                        return(<span style={{backgroundColor:"#F4F4F4"}} onClick={()=>onClickCodyStyle(index)}>{item.name}</span>)
-                                    })}
-                                </div>
+                                <p style={{display:"inline-block"}}>스타일</p>
+                                <div className='style'>
+                                {codyStyle.map((item, index) => {
+                                    if(item.status)return(<span style={{backgroundColor:"#7939FF",color:"white"}} onClick={()=>onClickStyle(index)}>{item.name}</span>)
+                                    return(<span style={{backgroundColor:"#F4F4F4"}} onClick={()=>onClickStyle(index)}>{item.name}</span>)
+                                })}
+                            </div>
                             </div>
                             <div style={{display:"flex"}}>
                                 <p style={{display:"inline"}}>코디 설명</p>
@@ -256,14 +350,8 @@ function AddCloth({setAddCloth, cody}){
                     </Infromation>:
                    
                      <Infromation>
-                        <input
-                        type="file"
-                        ref={imgRef}
-                        onChange={onChangeImage}
-                        style={{ display: "none" }}
-                        />
                      <Image>
-                         <img onClick={onClickFileBtn} src="https://user-images.githubusercontent.com/44117975/198823926-d1a8fed0-a178-422b-99f7-de4f6548cb07.png" alt="addImg"/>
+                         <img src="https://user-images.githubusercontent.com/44117975/198823926-d1a8fed0-a178-422b-99f7-de4f6548cb07.png" alt="addImg"/>
                      </Image>
                      <InformationDetail>
                          <div>
@@ -311,14 +399,88 @@ function AddCloth({setAddCloth, cody}){
                      
                      </InformationDetail>
                  </Infromation>
-                 
                  }
                 </>
                 <Submit>
-                    <Button onClick={closeAddCloth} backgroundColor="#747474" color="white">취소</Button>
-                    <Button onClick={submit} backgroundColor="#F4F4F4" color="#747474">올리기</Button>
+                    <Button onClick={closeAddCloth} backgroundColor="#F4F4F4" color="#747474">취소</Button>
+                    <Button onClick={submit} backgroundColor="#747474" color="white">확인</Button>
+                </Submit>
+            </Container2>:
+            <Container2>
+                  <> 
+                    <Title>{standard[cody]} 보기</Title>
+                    {cody===0 ?
+                    <Infromation>
+                        <input
+                        type="file"
+                        ref={imgRef}
+                        onChange={onChangeImage}
+                        style={{ display: "none" }}
+                        />
+                        <Image>
+                            <img src={user.url} alt="detailImag3e"/>
+                        </Image>
+                        <InformationDetail>
+                            <div>
+                                <p style={{display:"inline-block"}}>코디명</p>
+                                <div className='codyName'>{user.name}</div>
+                            </div>
+                            <div>
+                                <p style={{display:"inline-block"}}>스타일</p>
+                                <div className='codyStyle'>{user.style}</div>
+                            </div>
+                            <div style={{display:"flex"}}>
+                                <p style={{display:"inline"}}>코디 설명</p>
+                                <div className='codyReview'>
+                                    {user.review}
+                                </div>
+                            </div>
+                        
+                        </InformationDetail>
+                    </Infromation>:
+                   
+                     <Infromation>
+                     <Image>
+                         <img src={user.url}  alt="addImg"/>
+                     </Image>
+                     <InformationDetails>
+                         <div>
+                             <p style={{display:"inline-block"}}>제품명</p>
+                             <div className='codyName'>{user.name}</div>
+                         </div>
+                         <div>
+                            <p style={{display:"inline-block"}}>판매처</p>
+                            <div className='codyName'>{user.mall}</div>
+                         </div>
+                         <div> 
+                            <p style={{display:"inline-block"}}>사이즈</p>
+                            <div className='codyName'>{user.size}</div>
+                         </div>
+                         <div>
+                            <p style={{display:"inline-block"}}>스타일</p>
+                            <div className='codyName'>{user.style}</div>
+                         <div>
+
+                         </div>
+                         </div>
+                         <div style={{display:"flex"}}>
+                             <p style={{display:"inline"}}>코디 설명</p>
+                             <div className='codyReview'>
+                                    {user.review}
+                                </div>
+                         </div>
+                     
+                     </InformationDetails>
+                 </Infromation>
+                 }
+                </> 
+                <Submit>
+                    <Button onClick={onClickRepairButton} backgroundColor="#F4F4F4" color="#747474">수정하기</Button>
+                    <Button onClick={closeAddCloth} backgroundColor="#747474" color="white">확인</Button>
                 </Submit>
             </Container2>
+            }
+            
          </Container>
         </>
        
@@ -326,4 +488,4 @@ function AddCloth({setAddCloth, cody}){
 
 }
 
-export default AddCloth;
+export default ShowDetailCloth;

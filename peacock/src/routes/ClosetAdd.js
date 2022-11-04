@@ -27,7 +27,6 @@ const Input = styled.input`
   margin-top:3vh;
 `;
 const Sizes =styled.div`
-  
     flex-wrap: wrap;
     display: flex;
     column-gap:2vw;
@@ -86,15 +85,14 @@ function ClosetAdd(){
         {status:0,name:"스타일"},
         {status:0,name:"스타일"},
     ]
-);
-const styleClick=(index)=>{
-  let names = style[index].name;
-  if(style[index].status)
-  setStyle([...style.slice(0,index),{status:0,name:names},...style.slice(index+1)])
-  else
-  setStyle([...style.slice(0,index),{status:1,name:names},...style.slice(index+1)])
-  
-}
+  );
+  const styleClick=(index)=>{
+    let names = style[index].name;
+    if(style[index].status)
+    setStyle([...style.slice(0,index),{status:0,name:names},...style.slice(index+1)])
+    else
+    setStyle([...style.slice(0,index),{status:1,name:names},...style.slice(index+1)])
+  };
   const imgRef = useRef();
   const onChangeImage = () => {
     const reader = new FileReader();
@@ -138,7 +136,8 @@ function onChangeMyEdit(value) {
   value=encodeURI(value);
   console.log(decodeURI(value));
   setRead(decodeURI(value));
-}
+}                     
+
   return (
     <Container>
       <button onClick={submit} style={{position:"fixed",width:"4vw",height:"5vh",right:"1vw",bottom:"3.8vh",borderRadius:"50%",backgroundColor:"white"}}>완료</button>
@@ -156,7 +155,7 @@ function onChangeMyEdit(value) {
           ref={imgRef}
           onChange={onChangeImage}
           style={{ display: "none" }}
-      />
+        />
       </div>
       <div>
         <div style={{display:"flex"}}>
