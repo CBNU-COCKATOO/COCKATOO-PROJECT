@@ -13,7 +13,6 @@ import MyPageFollower from "./Mypage/MypageFollower";
 import MyPageSetting from "./Mypage/MyPageSetting";
 import MyPageStyleFix from "./Mypage/MypageStyleFix";
 import MyPageInfoFix  from "./Mypage/MyPageInfoFix";
-import ClosetAdd from "./routes/ClosetAdd";
 
 function Router(){
     return (
@@ -22,7 +21,6 @@ function Router(){
             <Route element={<Layout />}>
             <Route path="/" element={<Main/>}></Route>
             <Route path="/closet/:username" element={<Closet/>}></Route>
-            <Route path="/closet/:username/closetAdd/:where" element={<ClosetAdd/>}></Route>
             <Route path="/ranking" element={<Ranking/>}></Route>
             <Route path="/dictionary" element={<Dictionary/>}></Route>
             <Route path="/search/:keyword" element={<Search/>}></Route>

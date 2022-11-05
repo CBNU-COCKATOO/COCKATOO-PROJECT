@@ -186,14 +186,16 @@ function AddCloth({setAddCloth, cody}){
             ],
         }
     };
+
     const onChangeMyEdit = (value) => {
         value = encodeURI(value);
         setRead(decodeURI(value));
-      }
+    }
     
     const onChangeCodyName = (e) =>{
         setCodyName(e.target.value);
     }
+
     const onClickStyle = (index) =>{
         const newStyle = codyStyle[index].name;
         if(codyStyle[index].status)
@@ -201,9 +203,11 @@ function AddCloth({setAddCloth, cody}){
         else
         setCodyStyle([...codyStyle.slice(0,index),{name:newStyle,status:1},...codyStyle.slice(index+1)])
     }
+
     const onClickSize = (index) =>{
         setSizeStauts(index);  
     }
+    
     const submit = () =>{
         console.log(codyName, codyStyle.filter((item)=>item.status===1),read,color)
     }   
