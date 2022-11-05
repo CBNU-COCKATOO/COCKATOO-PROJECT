@@ -1,9 +1,9 @@
 import './index.css'
 import { Outlet,Link,useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useRecoilValue,useSetRecoilState } from 'recoil';
+import { useRecoilValue,useSetRecoilState} from 'recoil';
 import { useState } from 'react';
-import { LoginStatus } from './atoms'
+import { LoginStatus, TotalId } from './atoms'
 
 const Header = styled.div`
    display: flex;
@@ -86,9 +86,12 @@ margin-top:1.3vh;
 function Layout(){
   const [state,setState]=useState(0);
   const [keyword,setKeyword]=useState("가디건 추천");
+
   const navigate=useNavigate();
   const loginStatus = useRecoilValue(LoginStatus);
-  const setterLoginStatus=useSetRecoilState(LoginStatus);
+  const user = useRecoilValue(TotalId);
+  const setterLoginStatus = useSetRecoilState(LoginStatus);
+  const setterTotalId = useSetRecoilState(TotalId);
 
   const onClickLogo = () =>{
     navigate("/");
@@ -113,6 +116,10 @@ function Layout(){
   const onClickLogin = () =>{
       navigate("/login");
       setState(5);
+  }
+  const onClickLogOut = () => {
+    setterLoginStatus(0);
+    setterTotalId("");
   }
   const onChangeKeyword = (e) =>{
     setKeyword(e.target.value);
@@ -163,14 +170,14 @@ function Layout(){
                 <h3 onClick={onClickMyPage}>마이페이지</h3>
               </MyPage>}
                 <User>
-                  <h3>User님</h3>
+                  <h3>{user? user: "게스트"}님</h3>
                 </User>
                 {state===5?
                 <Login>
-                  <h3 onClick={onClickLogin} style={{fontWeight:"bold",color:"#7939FF"}}>로그인</h3>
+                   {loginStatus ? <h3 style={{fontWeight:"bold",color:"#7939FF"}} onClick={onClickLogOut}>로그아웃</h3>: <h3 style={{fontWeight:"bold",color:"#7939FF"}}  onClick={onClickLogin}>로그인</h3>}
                 </Login>:
                 <Login>
-                <h3 onClick={onClickLogin}>로그인</h3>
+                {loginStatus ? <h3 onClick={onClickLogOut}>로그아웃</h3>: <h3 onClick={onClickLogin}>로그인</h3>}
               </Login>}
             </Head>
         </Header>
