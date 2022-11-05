@@ -194,7 +194,7 @@ function SignUp(){
     const [emailCheck,setEmailCheck]=useState(0); //이메일 체크
     const [cm,setCm]=useState(0);
     const [kg,setKg]=useState(0);
-    const [style,setStyle] = useState( //스타일
+    const [mainStyle,setMainStyle] = useState( //스타일
         [
             {status:0,name:"캐주얼"},
             {status:0,name:"스트릿"},
@@ -205,13 +205,32 @@ function SignUp(){
             {status:0,name:"스타일4"},
         ]
     );
-    //스타일 클릭 함수
-    const styleClick=(index)=>{
-        let names = style[index].name;
-        if(style[index].status)
-        setStyle([...style.slice(0,index),{status:0,name:names},...style.slice(index+1)])
+    const [subStyle,setSubStyle] = useState( //스타일
+    [
+        {status:0,name:"캐주얼"},
+        {status:0,name:"스트릿"},
+        {status:0,name:"미니멀"},
+        {status:0,name:"스타일1"},
+        {status:0,name:"스타일2"},
+        {status:0,name:"스타일3"},
+        {status:0,name:"스타일4"},
+    ]
+);
+    //메인 스타일 클릭 함수
+    const mainStyleClick=(index)=>{
+        let names = mainStyle[index].name;
+        if(mainStyle[index].status)
+        setMainStyle([...mainStyle.slice(0,index),{status:0,name:names},...mainStyle.slice(index+1)])
         else
-        setStyle([...style.slice(0,index),{status:1,name:names},...style.slice(index+1)])
+        setMainStyle([...mainStyle.slice(0,index),{status:1,name:names},...mainStyle.slice(index+1)])
+    }
+     //서브 스타일 클릭 함수
+     const subStyleClick=(index)=>{
+        let names = subStyle[index].name;
+        if(subStyle[index].status)
+        setSubStyle([...subStyle.slice(0,index),{status:0,name:names},...subStyle.slice(index+1)])
+        else
+        setSubStyle([...subStyle.slice(0,index),{status:1,name:names},...subStyle.slice(index+1)])
     }
     //첫번째 동의 함수
     const Check1=()=>{
@@ -280,15 +299,17 @@ function SignUp(){
         }
         mutate(
             {
-                "id":"abcd1234",
-                "password":"qwer1234",
-                "username":"낙현",
-                "image":"URL",
-                "email":"knh6269@gmail.com",
-                "age":"",
-                "phonenumber":"01000003333",
-                "height":177,
-                "weight":67
+                "u_id": "Yumi",
+                "u_pw": "23221",
+                "u_name": "김유미",
+                "u_image": "-",
+                "u_age": "24",
+                "u_email": "yumi7754@naver.com",
+                "u_height": 158,
+                "u_weight": 50,
+                "u_mainst":"캐쥬얼",
+                "u_subst" : "스트릿",
+                "u_emagree":"FALSE"
              }
         );
     }
@@ -388,11 +409,20 @@ function SignUp(){
                 <p style={{marginLeft:"1vw"}}>몸무게</p><ProfileInput onChange={handleChangeKg} placeholder="kg"/>
                 </div>
                 <div style={{display:"flex",width:"80%",flexDirection:"column"}}>
-                    <div style={{marginTop:"1vh"}}><p>스타일</p></div>
+                    <div style={{marginTop:"1vh"}}><p>메인 스타일</p></div>
                     <Styles>
-                        {style.map((item,index)=>{
-                            if(item.status)return(<h4 index={index} onClick={()=>styleClick(index)}style={{color:"white",backgroundColor:"#7939FF"}}>{item.name}</h4>);
-                            return( <h4 index={index} onClick={()=>styleClick(index)}>{item.name}</h4>);
+                        {mainStyle.map((item,index)=>{
+                            if(item.status)return(<h4 index={index} onClick={()=>mainStyleClick(index)}style={{color:"white",backgroundColor:"#7939FF"}}>{item.name}</h4>);
+                            return( <h4 index={index} onClick={()=>mainStyleClick(index)}>{item.name}</h4>);
+                        })}
+                    </Styles>
+                </div>
+                <div style={{display:"flex",width:"80%",flexDirection:"column"}}>
+                    <div style={{marginTop:"1vh"}}><p>서브 스타일</p></div>
+                    <Styles>
+                        {subStyle.map((item,index)=>{
+                            if(item.status)return(<h4 index={index} onClick={()=>subStyleClick(index)}style={{color:"white",backgroundColor:"#7939FF"}}>{item.name}</h4>);
+                            return( <h4 index={index} onClick={()=>subStyleClick(index)}>{item.name}</h4>);
                         })}
                     </Styles>
                 </div>
