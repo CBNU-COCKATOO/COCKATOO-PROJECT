@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { TotalId, TotalPw } from "../atoms";
+import { useEffect, useState ,useRef} from "react";
 import "../index.css"
 const Container = styled.div`
     width:50%;
@@ -216,6 +217,7 @@ function SignUp(){
         {status:0,name:"스타일4"},
     ]
 );
+    const [imageUrl, setImageUrl] = useState(null); //이미지 url
     //메인 스타일 클릭 함수
     const mainStyleClick=(index)=>{
         let names = mainStyle[index].name;
@@ -359,6 +361,21 @@ function SignUp(){
         }
     }
 
+    const imgRef = useRef();
+    const onChangeImage = () => {
+        const reader = new FileReader();
+        const file = imgRef.current.files[0];
+        console.log(file);
+    
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+          setImageUrl(reader.result);
+          console.log("이미지주소", reader.result);
+        };
+      };
+    const onClickFileBtn = (e) => {
+        imgRef.current.click();
+    };
     return(
         <Page>
         <div style={{display:"flex",width:"50%"}}>
@@ -402,6 +419,18 @@ function SignUp(){
                 </Contianer2>
 
 
+                <Contianer2>
+                <p>프로필 사진</p>
+                <Image>
+                <img onClick={onClickFileBtn}  src={imageUrl ? imageUrl : "https://user-images.githubusercontent.com/44117975/198823926-d1a8fed0-a178-422b-99f7-de4f6548cb07.png"} alt="addImg"/>
+                </Image>
+                <input
+                        type="file"
+                        ref={imgRef}
+                        onChange={onChangeImage}
+                        style={{ display: "none" }}
+                        />
+                </Contianer2>
                 <Contianer2>
                 <p>체형</p>
                 <div style={{display:"flex"}}>
