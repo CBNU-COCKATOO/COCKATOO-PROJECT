@@ -1,4 +1,2 @@
-import {useQuery} from "react-query";
-import { useMutation } from "react-query";
-
+const URL =" http://43.200.68.165:3000";
 
