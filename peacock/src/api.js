@@ -10,3 +10,12 @@ export const postSignup = async (data) => {
     })
       .then((response) => response.json());
   }
+  //아이디 중복 확인 
+export const getIdSame = async(id) => {
+     return fetch(`${URL}/idcheck/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    })
+}
