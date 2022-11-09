@@ -324,6 +324,8 @@ function Main(){
     let todayMonth = now.getMonth()+1
     if(todayMonth<10)todayMonth='0'+todayMonth
     let todayDate = now.getDate()
+    let todayDate = now.getDate();
+    if(todayDate<10) todayDate='0'+todayDate;
     const navigate = useNavigate()
     // const ids = useRecoilValue(TotalId);
     // const pws = useRecoilValue(TotalPw);
