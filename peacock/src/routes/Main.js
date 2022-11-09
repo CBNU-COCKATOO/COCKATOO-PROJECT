@@ -13,6 +13,12 @@ const Container = styled.div`
     margin-left:15vw;
     flex-direction: column;
     font-family: 'SUIT';
+    .rankercody,.pidCody{
+        img{
+            max-height: 9vh;
+            object-fit: cover;
+        }
+    }
 `;
 const Page = styled.div`
     margin-top: 10vh;
@@ -323,7 +329,6 @@ function Main(){
     const year=now.getFullYear()
     let todayMonth = now.getMonth()+1
     if(todayMonth<10)todayMonth='0'+todayMonth
-    let todayDate = now.getDate()
     let todayDate = now.getDate();
     if(todayDate<10) todayDate='0'+todayDate;
     const navigate = useNavigate()
@@ -340,7 +345,7 @@ function Main(){
     };
     const settings2 = {
         dots: false,  // 점은 안 보이게
-        infinite: true, // 무한으로 즐기게
+        infinite: false, // 무한으로 즐기게
         speed: 500,
         slidesToShow: 4, // 4장씩 보이게 해주세요
         slidesToScroll: 1, //   1장씩 넘어가세요
@@ -353,13 +358,13 @@ function Main(){
         slidesToScroll: 3, //   1장씩 넘어가세요
     };
     const rankUser = [
-        {rank:1,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",
-            name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
+        {rank:1,img:"https://user-images.githubusercontent.com/44117975/200116960-6a5e1e41-924d-4c19-87e8-5a858ae0aeda.jpg",
+            name:"낙현",follwer:"9,099",cm:172,kg:63,style:"스트릿",
             cody:[
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+                {codyImg:"https://user-images.githubusercontent.com/44117975/200117039-723a862b-425e-4324-9226-a3d246749bed.jpg"},
+                {codyImg:"https://user-images.githubusercontent.com/44117975/200117036-314c024d-8ef4-4419-afe8-ef09e8a21ee0.jpg"},
+                {codyImg:"https://user-images.githubusercontent.com/44117975/200117037-34a43ed4-de22-4aa9-ae46-4b5299fefa2c.jpg"},
+                {codyImg:"https://user-images.githubusercontent.com/44117975/200117038-94bd4983-252b-447a-a090-631c3ca30038.jpg"},
                 {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
             ]},
         {rank:2,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxg2tsWkRK9NU0udYZ37jaG7CjW-yjY2NQDQ&usqp=CAU",
