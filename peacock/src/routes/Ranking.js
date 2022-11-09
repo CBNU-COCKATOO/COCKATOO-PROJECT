@@ -146,6 +146,43 @@ const RankingSt =styled.div`
 `;
 const rankUser = [
     {rank:1,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",
+        name:"지연",follwer:"9,099",cm:172,kg:63,style:"캐주얼",
+        cody:[
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+        ]},
+    {rank:2,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxg2tsWkRK9NU0udYZ37jaG7CjW-yjY2NQDQ&usqp=CAU",
+        name:"지연",follwer:"9,099",cm:172,kg:63,style:"캐주얼",
+        cody:[
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+        ]},
+    {rank:3,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTXuiRBqKA0qVwkVzjTZ-cLPA1n5P_pVhRug&usqp=CAU",
+        name:"지연",follwer:"9,099",cm:172,kg:63,style:"캐주얼",
+        cody:[
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+        ]},
+    {rank:4,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUW-V-jF5Frv4AdL6SY00wcwuuITIbrU3NXw&usqp=CAU",
+        name:"지연",follwer:"9,099",cm:172,kg:63,style:"캐주얼",
+        cody:[
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+        ]},
+        {rank:1,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",
         name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
         cody:[
             {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
@@ -182,8 +219,8 @@ const rankUser = [
             {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
             {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
         ]},
-        {rank:5,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",
-        name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
+        {rank:1,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUW-V-jF5Frv4AdL6SY00wcwuuITIbrU3NXw&usqp=CAU",
+        name:"지연",follwer:"9,099",cm:172,kg:63,style:"미니멀",
         cody:[
             {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
             {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
@@ -191,8 +228,8 @@ const rankUser = [
             {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
             {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
         ]},
-    {rank:6,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxg2tsWkRK9NU0udYZ37jaG7CjW-yjY2NQDQ&usqp=CAU",
-        name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
+        {rank:2,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",
+        name:"지연",follwer:"9,099",cm:172,kg:63,style:"미니멀",
         cody:[
             {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
             {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
@@ -200,18 +237,8 @@ const rankUser = [
             {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
             {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
         ]},
-    {rank:7,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTXuiRBqKA0qVwkVzjTZ-cLPA1n5P_pVhRug&usqp=CAU",
-        name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
-        cody:[
-            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-
-            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-        ]},
-    {rank:8,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUW-V-jF5Frv4AdL6SY00wcwuuITIbrU3NXw&usqp=CAU",
-        name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
+    {rank:3,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxg2tsWkRK9NU0udYZ37jaG7CjW-yjY2NQDQ&usqp=CAU",
+        name:"지연",follwer:"9,099",cm:172,kg:63,style:"미니멀",
         cody:[
             {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
             {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
@@ -219,35 +246,8 @@ const rankUser = [
             {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
             {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
         ]},
-        {rank:9,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUW-V-jF5Frv4AdL6SY00wcwuuITIbrU3NXw&usqp=CAU",
-        name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
-        cody:[
-            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-        ]},
-        {rank:10,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",
-        name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
-        cody:[
-            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-        ]},
-    {rank:11,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxg2tsWkRK9NU0udYZ37jaG7CjW-yjY2NQDQ&usqp=CAU",
-        name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
-        cody:[
-            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-            {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-        ]},
-    {rank:12,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTXuiRBqKA0qVwkVzjTZ-cLPA1n5P_pVhRug&usqp=CAU",
-        name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
+    {rank:4,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTXuiRBqKA0qVwkVzjTZ-cLPA1n5P_pVhRug&usqp=CAU",
+        name:"지연",follwer:"9,099",cm:172,kg:63,style:"미니멀",
         cody:[
             {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
             {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
@@ -256,7 +256,7 @@ const rankUser = [
 
             {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
         ]},
-    {rank:13,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUW-V-jF5Frv4AdL6SY00wcwuuITIbrU3NXw&usqp=CAU",
+    {rank:5,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUW-V-jF5Frv4AdL6SY00wcwuuITIbrU3NXw&usqp=CAU",
         name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
         cody:[
             {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
@@ -266,14 +266,15 @@ const rankUser = [
             {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
         ]},
 ]
+
 function Ranking(){
    const handleScroll=()=>{
     const scrollHeight = document.documentElement.scrollHeight;
     const scrollTop = document.documentElement.scrollTop;
     const clientHeight = document.documentElement.clientHeight;
-    if(scrollTop+clientHeight>=scrollHeight)
+    if (scrollTop+clientHeight>=scrollHeight) {
         setPidNum(pidNum+6);
-
+    }
    }
    useEffect(()=>{
     window.addEventListener("scroll",handleScroll);
@@ -283,7 +284,7 @@ function Ranking(){
    })
    
     const [pidNum,setPidNum]=useState(6)
-    const [styles,setStyles]=useState(0);
+    const [styles,setStyles]=useState("캐주얼");
     let settings={
         dots: false,  // 점은 안 보이게
         infinite: true, // 무한으로 즐기게
@@ -296,18 +297,18 @@ function Ranking(){
     return(
         <>
         <StyleCollect>
-            {styles==0?<Style style={{backgroundColor:" #7939FF",color:"white"}} onClick={()=>{setStyles(0)}}>캐주얼</Style>:<Style onClick={()=>{setStyles(0)}}>캐주얼</Style>}
-            {styles==1?<Style style={{backgroundColor:" #7939FF",color:"white"}} onClick={()=>{setStyles(1)}}>스트릿</Style>: <Style onClick={()=>{setStyles(1)}}>스트릿</Style>}
-            {styles==2?<Style style={{backgroundColor:" #7939FF",color:"white"}} onClick={()=>{setStyles(2)}}>미니멀</Style>: <Style onClick={()=>{setStyles(2)}}>미니멀</Style>}
-           {styles==3? <Style style={{backgroundColor:" #7939FF",color:"white"}} onClick={()=>{setStyles(3)}}>스타일1</Style>:<Style onClick={()=>{setStyles(3)}}>스타일1</Style>}
-           {styles==4? <Style style={{backgroundColor:" #7939FF",color:"white"}} onClick={()=>{setStyles(4)}}>스타일2</Style>:<Style onClick={()=>{setStyles(4)}}>스타일2</Style>}
+            {styles=="캐주얼"?<Style style={{backgroundColor:" #7939FF",color:"white"}} onClick={()=>{setStyles("캐주얼")}}>캐주얼</Style>:<Style onClick={()=>{setStyles("캐주얼")}}>캐주얼</Style>}
+            {styles=="스트릿"?<Style style={{backgroundColor:" #7939FF",color:"white"}} onClick={()=>{setStyles("스트릿")}}>스트릿</Style>: <Style onClick={()=>{setStyles("스트릿")}}>스트릿</Style>}
+            {styles=="미니멀"?<Style style={{backgroundColor:" #7939FF",color:"white"}} onClick={()=>{setStyles("미니멀")}}>미니멀</Style>: <Style onClick={()=>{setStyles("미니멀")}}>미니멀</Style>}
+           {styles=="스타일1"? <Style style={{backgroundColor:" #7939FF",color:"white"}} onClick={()=>{setStyles("스타일1")}}>스타일1</Style>:<Style onClick={()=>{setStyles("스타일1")}}>스타일1</Style>}
+           {styles=="스타일2"? <Style style={{backgroundColor:" #7939FF",color:"white"}} onClick={()=>{setStyles("스타일2")}}>스타일2</Style>:<Style onClick={()=>{setStyles("스타일2")}}>스타일2</Style>}
         </StyleCollect>
         <div style={{display:"flex",width:"100%",justifyContent:"center"}}>
         <Page2>
                 <First>
                     <Pid>
                     {rankUser.filter((item)=>{
-                        if(item.rank%3==1&&item.rank<=pidNum)return true;
+                        if(item.rank%3==1&&item.rank<=pidNum&&item.style===styles)return true;
                         return false;
                     }).map((item,index)=>{
                         return(
@@ -344,7 +345,7 @@ function Ranking(){
                 <Second>
                 <Pid>
                 {rankUser.filter((item)=>{
-                        if(item.rank%3==2&&item.rank<=pidNum)return true;
+                        if(item.rank%3==2&&item.rank<=pidNum&&item.style===styles)return true;
                         return false;
                     }).map((item,index)=>{                       
                          return(
@@ -381,7 +382,7 @@ function Ranking(){
                 <Third>
                 <Pid>
                 {rankUser.filter((item)=>{
-                        if(item.rank%3==0&&item.rank<=pidNum)return true;
+                        if(item.rank%3==0&&item.rank<=pidNum&&item.style===styles)return true;
                         return false;
                     }).map((item,index)=>{                 
                         return(
