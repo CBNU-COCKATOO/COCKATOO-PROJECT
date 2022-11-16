@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components"
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { TotalId,TotalPw } from "../atoms";
+import { TotalId } from "../Recoil/Atoms";
 import Slider from "react-slick";
-import "../slick.css";
-import "../slick-theme.css";
+import '../Style/slick.css';
+import "../Style/slick-theme.css";
 import '../index.css'
+import { getRanking, getFollowingCloset, setFollowingCloset } from '../Recoil/Api';
+import { useMutation } from "react-query";
+import { render } from "@testing-library/react";
 
 const Container = styled.div`
     display: flex;
@@ -15,8 +18,9 @@ const Container = styled.div`
     font-family: 'SUIT';
     .rankercody,.pidCody{
         img{
-            max-height: 9vh;
-            object-fit: cover;
+            max-width:90%;
+            height:5.5vw;
+            object-fit:fill;
         }
     }
 `;
@@ -96,7 +100,7 @@ const Ranking = styled.div`
       z-index: 1;
       width:100%;
       height:40vh;
-      object-fit: contain;
+      object-fit: cover;
     }
     .rankercody{
         width:100%;
@@ -130,18 +134,20 @@ const RankingSt =styled.div`
 
 `;
 const RankingProfile = styled.div`
+    cursor:pointer;
+    display: flex;
     margin-top:1vh;
     .rankName{
+        width:64%;
         font-size:1vw;
         font-weight: 600;
-        display: inline;
         font-family: 'SUIT';
     }
     .rankFollower{
+        position:relative;
+        top:0.5vh;
         font-size:0.7vw;
         color:#7939FF;
-        display: inline;
-        margin-left: 12.7vw;
         font-weight: 500;
         font-family: 'SUIT';
     }
@@ -196,6 +202,7 @@ const FollowingProfile = styled.div`
         border-radius: 50%;
         z-index: 1;
         filter: brightness(50%);
+        cursor: pointer;
     }
     .profiles{
         display: flex;
@@ -250,17 +257,21 @@ const PidImage = styled.div`
     }
 `;
 const PidProfile = styled.div`
+    width:100%;
+    margin-top:1vh;
+    cursor: pointer;
+    display: flex;
     .pidName{
+        width:44.5%;
         font-size:1vw;
         font-weight: 600;
-        display: inline;
         font-family: 'SUIT';
     }
     .pidFollower{
+        position: relative;
+        top:0.5vh;
         font-size:0.7vw;
         color:#7939FF;
-        display: inline;
-        margin-left: 11.9vw;
         font-weight: 500;
         font-family: 'SUIT';
     }
@@ -285,7 +296,7 @@ const Pids = styled.div`
       z-index: 1;
       width:100%;
       height:38vh;
-      object-fit: contain;
+      object-fit: cover;
     }
     .pidCody{
         width:72%;
@@ -325,16 +336,65 @@ const More = styled.button`
 
 
 function Main(){
-    const now = new Date()
-    const year=now.getFullYear()
-    let todayMonth = now.getMonth()+1
+    const id = useRecoilValue(TotalId);
+    const now = new Date();
+    const year=now.getFullYear();
+    let todayMonth = now.getMonth()+1;
     if(todayMonth<10)todayMonth='0'+todayMonth
     let todayDate = now.getDate();
     if(todayDate<10) todayDate='0'+todayDate;
     const navigate = useNavigate()
-    // const ids = useRecoilValue(TotalId);
-    // const pws = useRecoilValue(TotalPw);
+
     const [pidNum,setPidNum]=useState(2)
+    const [rankUser,setRankUser] = useState();
+    const [randomUser,setRandomUser] = useState();
+    const [follow, setFollow] = useState([]);
+    const [update,setUpdate] = useState(0);
+
+    useEffect(() => {
+            getRanking()
+            .then(response => response.json())
+            .then(response => {
+                response.map((item)=>{
+                    item.cody_image = [item.cody_image];
+                })
+                for(let i = 0; i<response.length-1; i++) {
+                    if (response[i].u_id == response[i+1].u_id) {
+                        response[i+1].cody_image = [...response[i].cody_image,...response[i+1].cody_image];
+                        response.splice(i,1);
+                        i--;
+                    }
+                } 
+                response.sort(function comperator(a,b){
+                    if (a.u_follower < b.u_follower) {
+                        return 1;
+                    }
+                    if (a.u_follower > b.u_follower) {
+                        return -1;
+                    }
+                    else {
+                        return 0;
+                    }
+                })
+                let index = 1;
+                for(let i = 0; i < response.length; i++) {
+                    response[i] = {...response[i],"rank":index};
+                    index++;
+                }
+                setRankUser(response)
+                setRandomUser([...response].sort(()=>Math.random()-0.5));
+            })
+        
+    }
+    ,[update])
+
+    useEffect(()=>{
+        getFollowingCloset(id)
+        .then(response => response.json())
+        .then(response => {
+            setFollow(response)
+        })
+    },[follow])
 
     const settings = {
         dots: false,  // 점은 안 보이게
@@ -345,7 +405,7 @@ function Main(){
     };
     const settings2 = {
         dots: false,  // 점은 안 보이게
-        infinite: false, // 무한으로 즐기게
+        infinite: false, // 무한으로 즐기게 
         speed: 500,
         slidesToShow: 4, // 4장씩 보이게 해주세요
         slidesToScroll: 1, //   1장씩 넘어가세요
@@ -357,82 +417,33 @@ function Main(){
         slidesToShow: 5.5, //   4장씩 보이게 해주세요
         slidesToScroll: 3, //   1장씩 넘어가세요
     };
-    const rankUser = [
-        {rank:1,img:"https://user-images.githubusercontent.com/44117975/200116960-6a5e1e41-924d-4c19-87e8-5a858ae0aeda.jpg",
-            name:"낙현",follwer:"9,099",cm:172,kg:63,style:"스트릿",
-            cody:[
-                {codyImg:"https://user-images.githubusercontent.com/44117975/200117039-723a862b-425e-4324-9226-a3d246749bed.jpg"},
-                {codyImg:"https://user-images.githubusercontent.com/44117975/200117036-314c024d-8ef4-4419-afe8-ef09e8a21ee0.jpg"},
-                {codyImg:"https://user-images.githubusercontent.com/44117975/200117037-34a43ed4-de22-4aa9-ae46-4b5299fefa2c.jpg"},
-                {codyImg:"https://user-images.githubusercontent.com/44117975/200117038-94bd4983-252b-447a-a090-631c3ca30038.jpg"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-            ]},
-        {rank:2,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxg2tsWkRK9NU0udYZ37jaG7CjW-yjY2NQDQ&usqp=CAU",
-            name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
-            cody:[
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-            ]},
-        {rank:3,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTXuiRBqKA0qVwkVzjTZ-cLPA1n5P_pVhRug&usqp=CAU",
-            name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
-            cody:[
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+    
+    const onClickTodayRanking = (u_id) => {
+        navigate(`/closet/${u_id}`);
+    }
 
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-            ]},
-        {rank:4,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUW-V-jF5Frv4AdL6SY00wcwuuITIbrU3NXw&usqp=CAU",
-            name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
-            cody:[
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-            ]},
-            {rank:5,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",
-            name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
-            cody:[
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-            ]},
-        {rank:6,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxg2tsWkRK9NU0udYZ37jaG7CjW-yjY2NQDQ&usqp=CAU",
-            name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
-            cody:[
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-            ]},
-        {rank:7,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTXuiRBqKA0qVwkVzjTZ-cLPA1n5P_pVhRug&usqp=CAU",
-            name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
-            cody:[
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
+    const fetchFollow = useMutation(setFollowingCloset,{
+        onSuccess: data => {
+            if (data.message === "성공적으로 팔로우했습니다.") {
+                alert("팔로우 성공");
+                setUpdate(update+1);
+            } 
+            if (data.message === "Content can not be empty!") {
+                alert("로그인을 하세요");
+                setUpdate(update+1);
+            }
+        },
+        onError: () =>{
+            alert("에러발생")
+        }
+    });
 
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-            ]},
-        {rank:8,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUW-V-jF5Frv4AdL6SY00wcwuuITIbrU3NXw&usqp=CAU",
-            name:"지연",follwer:"9,099",cm:172,kg:63,style:"스트릿",
-            cody:[
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-                {codyImg:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SeUXZFjFeIaOWrk5v5s2B4cOYQXLbzew5868LNCzn3WVffHyntGTMhdjxnXbjq1ewy4&usqp=CAU"},
-            ]},
-    ]
+    const onClickFollowingButton = (u_id) => {
+        fetchFollow.mutate({
+            "follower_id" : id,
+            "followee_id" : u_id
+        })
+    }
     return(
         <Container>
             <Page>
@@ -446,28 +457,28 @@ function Main(){
                     </TRtitle>
                     <TRSlider>
                         <Slider {...settings}>
-                            {rankUser.map((item,index)=>{
+                            {rankUser ? rankUser.map((item,index)=>{
                                 return(
                                     <Ranking key={index}>
                                         <div className="rankings">
                                         <RankingSt>{item.rank}st</RankingSt>
                                         <RnakingImg>
-                                            <img className="rankerimg" src={item.img} alt="ranking"/>
+                                            <img className="rankerimg" src={item.u_image} alt="ranking"/>
                                         </RnakingImg>
                                          <RankingProfile>
-                                            <div className="rankName">{item.name}</div>
-                                            <div className="rankFollower">{item.follwer}</div>
-                                            <button type="button" className="followingBtn">팔로잉</button>
+                                            <div onClick={() => onClickTodayRanking(item.u_id)} className="rankName">{item.u_name}</div>
+                                            <div onClick={() => onClickTodayRanking(item.u_id)} className="rankFollower">{item.u_follower}명이 팔로잉</div>
+                                            <button onClick = {()=>onClickFollowingButton(item.u_id)} type="button" className="followingBtn">팔로잉</button>
                                         </RankingProfile>
                                         <RankingCmkg>
-                                            <div>{item.cm}cm {item.kg}kg {item.style}</div>
+                                            <div>{item.u_height}cm {item.u_weight}kg {item.u_mainst}</div>
                                         </RankingCmkg>
                                          <div className="todayLine"/>
                                         <div className="rankercody">
                                         <Slider {...settings2}>
-                                            {item.cody.map((item,index)=>{
+                                            {item.cody_image[0] && item.cody_image.map((item,index)=>{
                                                 return(
-                                                    <img key={index}className="rnakercodys" src={item.codyImg} alt="rankerCody"/>
+                                                    <img key={index}className="rnakercodys" src={item} alt="rankerCody"/>
                                                 )
                                             })}
                                         </Slider>
@@ -475,7 +486,7 @@ function Main(){
                                         </div>
                                     </Ranking>
                                 )
-                            })}
+                            }):""}
                         </Slider>
                     </TRSlider>
                 </TodayRanking>
@@ -484,15 +495,15 @@ function Main(){
                 </RankingArrow>
                 <Following>
                     <FollowingTitle>
-                        <div>USER님이<br/>팔로우하는<br/>23개의 옷장 </div>
+                        <div>USER님이<br/>팔로우하는<br/>{follow.length}개의 옷장 </div>
                     </FollowingTitle>
                     <FollowingProfile>
                         <Slider {...settings3}>
-                        {rankUser.map((item,index)=>{
+                        {follow.length > 0 && follow.map((item,index)=>{
                             return(
-                                     <div key={index}style={{display:"flex",textAlign:"center"}}>
-                                        <img src={item.img} alt="profilesImg" className="followingProfiles"/>
-                                        <Name>{item.name}</Name>
+                                     <div onClick = {() => onClickTodayRanking(item.u_id)} key={index}style={{display:"flex",textAlign:"center"}}>
+                                        <img src={item.u_image} alt="profilesImg" className="followingProfiles"/>
+                                        <Name>{item.u_name}</Name>
                                       </div>
                             )
                         })}
@@ -501,32 +512,32 @@ function Main(){
                 </Following>
                 <div className="line"/>
                <div className="line" style={{width:"18vw",backgroundColor:"gray",height:"0.2vh",marginLeft:0,marginBottom:"0.1vh"} }/>
-                
+
             </Page>
             <Page2>
                 <First>
                     <Pid>
-                    {rankUser.slice(0,pidNum).map((item,index)=>{
+                    {randomUser && randomUser.slice(0,pidNum).map((item,index)=>{
                         return(
                         <Pids key={index}>
                             <div className="pids">
                             <PidImage>
-                             <img className="pidimg" src={item.img} alt="ranking"/>
+                             <img className="pidimg" src={item.u_image} alt="ranking"/>
                             </PidImage>
                             <PidProfile>
-                                <div className="pidName">{item.name}</div>
-                                <div className="pidFollower">{item.follwer}</div>
-                                <button type="button" className="followingBtn">팔로잉</button>
+                                <div onClick={() => onClickTodayRanking(item.u_id)} className="pidName">{item.u_name}</div>
+                                <div onClick={() => onClickTodayRanking(item.u_id)} className="pidFollower">{item.u_follower}명이 팔로잉</div>
+                                <button  onClick = {()=>onClickFollowingButton(item.u_id)} type="button" className="followingBtn">팔로잉</button>
                             </PidProfile>
                             <PidCmKg>
-                             <div>{item.cm}cm {item.kg}kg {item.style}</div>
+                             <div>{item.u_height}cm {item.u_weight}kg {item.u_mainst}</div>
                             </PidCmKg>
                             <div className="todayLine"/>
                             <div className="pidCody">
                             <Slider {...settings2}>
-                            {item.cody.map((item,index)=>{
+                            {item.cody_image[0] && item.cody_image.map((item,index)=>{
                             return(
-                            <img key={index} className="rnakercodys" src={item.codyImg} alt="rankerCody"/>
+                            <img key={index} className="rnakercodys" src={item} alt="rankerCody"/>
                             )
                             })}
                             </Slider>
@@ -539,27 +550,27 @@ function Main(){
                 </First>
                 <Second>
                 <Pid>
-                    {rankUser.slice(0,pidNum).map((item,index)=>{
+                {randomUser && randomUser.slice(Math.floor(randomUser.length/2),Math.floor(randomUser.length/2)+pidNum).map((item,index)=>{
                         return(
                         <Pids key={index}>
                             <div className="pids">
                             <PidImage>
-                             <img className="pidimg" src={item.img} alt="ranking"/>
+                             <img className="pidimg" src={item.u_image} alt="ranking"/>
                             </PidImage>
-                            <PidProfile>
-                                <div className="pidName">{item.name}</div>
-                                <div className="pidFollower">{item.follwer}</div>
-                                <button type="button"className="followingBtn">팔로잉</button>
+                            <PidProfile >
+                                <div onClick={() => onClickTodayRanking(item.u_id)} className="pidName">{item.u_name}</div>
+                                <div onClick={() => onClickTodayRanking(item.u_id)} className="pidFollower">{item.u_follower}명이 팔로잉</div>
+                                <button  onClick = {()=>onClickFollowingButton(item.u_id)} type="button" className="followingBtn">팔로잉</button>
                             </PidProfile>
                             <PidCmKg>
-                             <div>{item.cm}cm {item.kg}kg {item.style}</div>
+                             <div>{item.u_height}cm {item.u_weight}kg {item.u_mainst}</div>
                             </PidCmKg>
                             <div className="todayLine"/>
                             <div className="pidCody">
                             <Slider {...settings2}>
-                            {item.cody.map((item,index)=>{
+                            {item.cody_image[0] && item.cody_image.map((item,index)=>{
                             return(
-                            <img key={index}className="rnakercodys" src={item.codyImg} alt="rankerCody"/>
+                            <img key={index} className="rnakercodys" src={item} alt="rankerCody"/>
                             )
                             })}
                             </Slider>
@@ -572,27 +583,27 @@ function Main(){
                 </Second>
                 <Third>
                 <Pid>
-                    {rankUser.slice(0,pidNum).map((item,index)=>{
+                {randomUser && randomUser.reverse().slice(0,pidNum).map((item,index)=>{
                         return(
                         <Pids key={index}>
                             <div className="pids">
                             <PidImage>
-                             <img className="pidimg" src={item.img} alt="ranking"/>
+                             <img className="pidimg" src={item.u_image} alt="ranking"/>
                             </PidImage>
                             <PidProfile>
-                                <div className="pidName">{item.name}</div>
-                                <div className="pidFollower">{item.follwer}</div>
-                                <button type="button" className="followingBtn">팔로잉</button>
+                                <div onClick={() => onClickTodayRanking(item.u_id)} className="pidName">{item.u_name}</div>
+                                <div onClick={() => onClickTodayRanking(item.u_id)} className="pidFollower">{item.u_follower}명이 팔로잉</div>
+                                <button  onClick = {()=>onClickFollowingButton(item.u_id)} type="button" className="followingBtn">팔로잉</button>
                             </PidProfile>
                             <PidCmKg>
-                             <div>{item.cm}cm {item.kg}kg {item.style}</div>
+                             <div>{item.u_height}cm {item.u_weight}kg {item.u_mainst}</div>
                             </PidCmKg>
                             <div className="todayLine"/>
                             <div className="pidCody">
                             <Slider {...settings2}>
-                            {item.cody.map((item,index)=>{
+                            {item.cody_image[0] && item.cody_image.map((item,index)=>{
                             return(
-                            <img key={index} className="rnakercodys" src={item.codyImg} alt="rankerCody"/>
+                            <img key={index} className="rnakercodys" src={item} alt="rankerCody"/>
                             )
                             })}
                             </Slider>
