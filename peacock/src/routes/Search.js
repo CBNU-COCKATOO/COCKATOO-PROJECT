@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { useMutation } from 'react-query';
+import { useParams, useNavigate } from "react-router-dom";
+import { search } from "../Recoil/Api";
 
 const Container = styled.div`  
     display: flex;
@@ -37,7 +39,7 @@ const Many=styled.div`
 `;
 const UserList= styled.div`
     width:100%;
-    height:18vh;
+    height:20vh;
     overflow-y: scroll;
     display: flex;
     row-gap: 2vh;
@@ -64,23 +66,24 @@ const UserDetail= styled.div`
     img{
         width:25%;
         height:6vh;
+        object-fit:cover;
         border-radius:50%;
         margin-right:1vw;
         &:active{ 
             position: absolute;
-            left:5vw;
+            object-fit:contain;
+            left:-13vw;
             border-radius: 0.5vw;
             top:35vh;
-            width:15vw;
-            height:15vw;
-           
-        
+            width:50%;
+            height:50%;
         }
     };
     .profile{
         display: flex;
         font-size:0.8vw;
         font-weight: 600;
+        cursor: pointer;
         .follow{
             margin-left:1vw;
             color:#7939FF;
@@ -105,131 +108,121 @@ const Tip=styled.div`
     color:#7939FF;
     font-weight: 600;
 `;
-const user=[
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
 
-]
-const style=[
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-]
-const closet=[
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-    {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJLZQ680TFqf07yXZPCdMnuKkMhvV0ccXbQ&usqp=CAU",name:'지연',cm:"172",kg:'63',style:"스트릿",id:"jiyeon"},
-]
+const CodyResult = styled.div`  
+    width:10vw;
+    .codyResultImg,.cloResultImg {
+        img {
+        width: 8vw;
+        height:17vh;
+        object-fit:cover;
+        cursor:pointer;
+        }
+    }
+    .codyResultName{
+        text-align:center;
+        margin-right:1.5vw;
+        font-weight:500;
+    }
+    
+`;
 function Search(){
-    const params=useParams();
-    const keyword=params.keyword;
+    const params = useParams();
+    const keyword = params.keyword;
+    const [result, setResult] = useState([]);
+    const navigate = useNavigate();
 
+    const postSearch = useMutation(search, {
+        onSuccess: data => {
+            console.log(data)
+            setResult(data)
+        },
+        onError: () => {
+            alert("there was an error")
+        },
+    });
+
+    useEffect(() => {
+        postSearch.mutate({"search_text":keyword})
+    },[keyword])
+ 
+    const onClickResultUser = (u_id) => {
+        navigate(`/closet/${u_id}`)
+    }
     return(
      <Container>
         <Container2>
-        <Keyword>
-            <div className="keywords">'{keyword}'</div> <div className="result">검색결과</div>
-        </Keyword>
-        <Tip>
-            사진을 클릭하고 계시면 좀 더 크게 볼 수 있습니다!!
-        </Tip>
-        <User>
-            <Many>유저명: {user.length}명</Many>
-            <UserList>
-                {user.map((item)=>{
-                    return(
-                        <UserDetail>
-                            <img src={item.img} alt="userimg"/>
-                            <div className="info">
-                                <div className="profile">
-                                {item.name}
-                                <div className="follow">팔로우</div>
+            <Keyword>
+                <div className="keywords">'{keyword}'</div> <div className="result">검색결과</div>
+            </Keyword>
+            <Tip>
+                유저 사진을 클릭하고 계시면 좀 더 크게 볼 수 있습니다!!
+            </Tip>
+            {result.length > 0 && 
+            <>
+            <User>
+                <Many>유저: {result[0].length}명</Many>
+                <UserList>
+                    {result[0].map((item) => {
+                        return(
+                            <UserDetail>
+                                <img src={item.u_image} alt="userimg"/>
+                                <div className="info">
+                                    <div className="profile" onClick={() => onClickResultUser(item.u_id)}>
+                                    {item.u_name}
+                                    <div className="follow">팔로우</div>
+                                    </div>
+                                    <div className="kgweight">
+                                    {item.u_height}cm {item.u_weight}kg {item.u_mainst}
+                                    </div>
                                 </div>
-                                <div className="kgweight">
-                                {item.cm}cm {item.kg}kg {item.style}
-                                </div>
-                            </div>
-                        </UserDetail>
+                            </UserDetail>
 
-                    );
-                })}
-            </UserList>
-        </User>
-        <User>
-            <Many>옷장: {user.length}명</Many>
-            <UserList>
-                {user.map((item)=>{
-                    return(
-                        <UserDetail>
-                            <img src={item.img} alt="userimg"/>
-                            <div className="info">
-                                <div className="profile">
-                                {item.name}
-                                <div className="follow">팔로우</div>
+                        );
+                    })}
+                </UserList>
+            </User>
+            </>
+            }
+            {result.length > 0 &&  
+            <>
+            <User>
+                <Many>코디: {result[1].length}명</Many>
+                <UserList style={{paddingTop:"1vh"}}>
+                    {result[1].map((item)=>{
+                        return(
+                            <CodyResult>
+                                <div className="codyResultImg">
+                                    <img onClick = {() => navigate(`/closet/${item.u_id}`)} src = {item.cody_image}/>
                                 </div>
-                                <div className="kgweight">
-                                {item.cm}cm {item.kg}kg {item.style}
+                                <div className="codyResultName">
+                                    {item.cody_name}
                                 </div>
-                            </div>
-                        </UserDetail>
+                            </CodyResult>
+                        );
+                    })}
+                </UserList>
+            </User>
+            </>}
+            {result.length > 0  && <>
+            <User>
+                <Many>옷: {result[2].length}명</Many>
+                <UserList>
+                    {result[2].map((item)=>{
+                        return(
+                            <CodyResult>
+                                <div className="cloResultImg">
+                                    <img onClick = {() => navigate(`/closet/${item.u_id}`)}  src = {item.clo_image}/>
+                                </div>
+                                <div className="codyResultName">
+                                    {item.clo_name}
+                                </div>
 
-                    );
-                })}
-            </UserList>
-        </User>
-        <User>
-            <Many>스타일: {user.length}명</Many>
-            <UserList>
-                {user.map((item)=>{
-                    return(
-                        <UserDetail>
-                            <img src={item.img} alt="userimg"/>
-                            <div className="info">
-                                <div className="profile">
-                                {item.name}
-                                <div className="follow">팔로우</div>
-                                </div>
-                                <div className="kgweight">
-                                {item.cm}cm {item.kg}kg {item.style}
-                                </div>
-                            </div>
-                        </UserDetail>
-
-                    );
-                })}
-            </UserList>
-        </User>
+                            </CodyResult>
+                        );
+                    })}
+                </UserList>
+            </User></>}
         </Container2>
      </Container>
     )
