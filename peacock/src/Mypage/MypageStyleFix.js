@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import styled from "styled-components"
 import {Link,useNavigate,Outlet} from "react-router-dom";
+import {repairStyle, getMyPage} from "../Recoil/Api";
+import { TotalId } from "../Recoil/Atoms";
+import { useRecoilValue } from "recoil";
 
 const Container = styled.div`
     display: flex;
@@ -26,7 +29,7 @@ const Title = styled.div`
     padding-bottom: 2vh;
     padding-top:1vh;
     .title{
-        width:10%;
+        width:13%;
         display: inline;
         font-family: 'SUIT';
         font-size:1vw;
@@ -85,30 +88,28 @@ const Input =styled.input`
 `;
 
 const Styles = styled.div`
-    justify-content:center;
-    align-items: center;
+    width:90%;
+    display:flex;
+    flex-wrap:wrap ;
+    column-gap: 1vw;
+    margin-left:0.6vw;
+    h4{
+    width:2.1vw;
     text-align: center;
-    flex-wrap: wrap;
-    display: flex;
-    gap:1vw;
-    div{
-        border:none;
-        border-radius: 1vw;
-        width:2vw;
-        height: 1.5vh;
-        font-family:'SUIT';
-        padding: 0.5vw 0.8vw 0.5vw 0.8vw;
-        font-size:0.7vw;
-        background-color: #F4F4F4;
-        letter-spacing: -0.03em;
-        color: #747474;
-        font-weight: 500;
-        cursor: pointer;
-        &:hover{
-            background-color:#7939FF;
-            color:white;
-            font-weight: 600;;
-        }
+    border: 1px solid white;
+    background-color: #F4F4F4;
+    border-radius: 0.8vw;
+    padding:0.6vw;
+    font-family: "Pretendard";
+    font-size:0.6vw;
+    font-weight: 100;
+    cursor: pointer;
+    &:hover{
+        background-color: white;
+        color:#7939FF;
+        font-weight: bold;
+        border:1px solid #7939FF;
+    }
     }
 `;
 const Button = styled.button`
@@ -124,38 +125,40 @@ const Button = styled.button`
     margin-left:37.7vw;
     cursor: pointer;
 `;
+
 function MyPageStyleFix(){
-    const user = {
-        height:166,
-        weight:53,
-    }
-    const [newHeight,setNewHeight] = useState(user.height);
-    const [newWeight,setNewWeight] = useState(user.weight);
-   
-    const [style,setStyle] = useState(
-        [
-            {status:0,name:"캐주얼"},
-            {status:0,name:"스트릿"},
-            {status:0,name:"미니멀"},
-            {status:0,name:"스타일"},
-            {status:0,name:"스타일"},
-            {status:0,name:"스타일"},
-            {status:0,name:"캐주얼"},
-            {status:0,name:"스트릿"},
-            {status:0,name:"미니멀"},
-            {status:0,name:"스타일"},
-            {status:0,name:"스타일"},
-            {status:0,name:"스타일"},
-           
-        ]
+    const [user, setUser] = useState();
+    const [newHeight,setNewHeight] = useState();
+    const [newWeight,setNewWeight] = useState();
+    const id = useRecoilValue(TotalId);
+    const [mainStyle, setMainStyle] = useState( //메인스타일
+        ["캐쥬얼","스트릿","미니멀","아메카지","시티보이","스포츠"]
     );
-    const styleClick=(index)=>{
-        let names = style[index].name;
-        if(style[index].status)
-        setStyle([...style.slice(0,index),{status:0,name:names},...style.slice(index+1)])
-        else
-        setStyle([...style.slice(0,index),{status:1,name:names},...style.slice(index+1)])
-        
+    const [subStyle, setSubStyle] = useState( //스타일
+        ["캐쥬얼","스트릿","미니멀","아메카지","시티보이","스포츠" ]
+    );
+    const [mainStyleStauts,setMainStyleStauts]=useState(0);
+    const [subStyleStauts,setSubStyleStauts]=useState(0);
+
+    useEffect(() => {
+        if (!user) {
+          getMyPage(id)
+          .then(response => response.json())
+          .then(response => {
+              setUser(response)
+              setNewHeight(response.u_height);
+              setNewWeight(response.u_weight);
+          })
+        }
+      }, [])
+
+    //메인 스타일 클릭 함수
+    const mainStyleClick=(index)=>{
+        setMainStyleStauts(index);
+       }
+     //서브 스타일 클릭 함수
+     const subStyleClick=(index)=>{
+        setSubStyleStauts(index);  
     }
     const onChangeHeight =(e)=>{
         setNewHeight(e.target.value);
@@ -163,30 +166,44 @@ function MyPageStyleFix(){
     const onChangeWeight =(e)=>{
         setNewWeight(e.target.value);
     }
-    const submit =()=>{
+    const onClickSubmit =()=>{
         if(newHeight===""||newHeight===""){
             alert("키 몸무게를 입력해주세요");
         }
         else{
-            let result = style.filter((item)=>item.status);
-            console.log(newHeight,newWeight,result);
+            repairStyle({
+                "data" : {
+                    "u_height": newHeight,
+                    "u_weight": newWeight,
+                    "u_mainst": mainStyle[mainStyleStauts],
+                    "u_subst": subStyle[subStyleStauts]
+                },
+                "u_id":id
+            }).then(response => {
+                console.log(response)
+                if (response.message === "체형/스타일 수정 성공했습니다.") {
+                    alert("변경 성공");
+                }
+            })
         } ;
     }
      return(
         <Container>
             <Container2>
                 <HW>
+                    {user&&
                     <Title>
+                        
                         <div className="title">체형</div>
                         <div className="kgweight">
                             <div className="titles">키</div>
                             <div className="titles" style={{marginTop:"3.5vh"}}>몸무게</div>
                         </div>
                         <div className="inputs">
-                            <Input onChange={onChangeHeight} placeholder={`${user.height}cm`}/>
-                            <Input onChange={onChangeHeight} placeholder={`${user.weight}kg`}/>
+                            <Input onChange={onChangeHeight} placeholder={`${user.u_height}cm`}/>
+                            <Input onChange={onChangeWeight} placeholder={`${user.u_weight}kg`}/>
                         </div>
-                    </Title>
+                    </Title>}
                 </HW>
             </Container2>
             <Container2>
@@ -195,12 +212,12 @@ function MyPageStyleFix(){
             <Container2>
                 <HW>
                     <Title>
-                        <div className="title">스타일</div>
+                        <div className="title">메인 스타일</div>
                         <div className="style">
                         <Styles>
-                        {style.map((item,index)=>{
-                           if(item.status)return(<div key={index} onClick={()=>styleClick(index)} style={{backgroundColor:" #7939FF",color:"white"}}>{item.name}</div>);
-                           return( <div key={index}  onClick={()=>styleClick(index)}>{item.name}</div>);
+                        {mainStyle.map((item,index)=>{
+                            if(index === mainStyleStauts)return(<h4 index={index} onClick={()=>mainStyleClick(index)}style={{color:"white",backgroundColor:"#7939FF"}}>{item}</h4>);
+                            return( <h4 index={index} onClick={()=>mainStyleClick(index)}>{item}</h4>);
                         })}
                         </Styles>
                         </div>
@@ -208,7 +225,23 @@ function MyPageStyleFix(){
                 </HW>
             </Container2>
             
-            <Button onClick={submit}>완료</Button>
+            <Container2>
+                <HW>
+                    <Title>
+                        <div className="title">서브 스타일</div>
+                        <div className="style">
+                        <Styles>
+                        {subStyle.map((item,index)=>{
+                            if(index === subStyleStauts)return(<h4 index={index} onClick={()=>subStyleClick(index)}style={{color:"white",backgroundColor:"#7939FF"}}>{item}</h4>);
+                            return( <h4 index={index} onClick={()=>subStyleClick(index)}>{item}</h4>);
+                        })}
+                        </Styles>
+                        </div>
+                    </Title>
+                </HW>
+            </Container2>
+
+            <Button onClick={onClickSubmit}>완료</Button>
            
         </Container>
     )   
